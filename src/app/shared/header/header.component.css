@@ -1,4 +1,16 @@
-@keyframes gradient-animation {
+/* Header Gradient and Animation */
+header {
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+    background-size: 300% 300%;
+    animation: gradient-animation 6s ease infinite;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  
+  /* Gradient Animation */
+  @keyframes gradient-animation {
     0% {
       background-position: 0% 50%;
     }
@@ -10,7 +22,79 @@
     }
   }
   
-  .animate-gradient {
-    background-size: 200% 200%;
-    animation: gradient-animation 10s ease infinite;
+  /* Header Container */
+  header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1.5rem;
   }
+  
+  /* Logo Styling */
+  header .text-3xl {
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  header .text-3xl:hover {
+    color: #fbbf24; /* Golden yellow */
+    transform: scale(1.1) rotate(3deg);
+  }
+  
+  /* Navigation Styling */
+  header nav ul {
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+  header nav a {
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+  }
+  
+  /* Hover Effects */
+  header nav a:hover {
+    color: #fbbf24;
+    transform: scale(1.1);
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.5);
+  }
+  
+  /* Background Highlight Effect */
+  header nav a:hover::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    width: 80%;
+    height: 3px;
+    background: #fbbf24;
+    border-radius: 3px;
+    transform: translateX(-50%);
+    opacity: 1;
+    transition: width 0.3s ease-in-out;
+  }
+  
+  header nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background: #fbbf24;
+    border-radius: 3px;
+    opacity: 0;
+    transition: width 0.3s ease-in-out;
+  }
+  
+  /* On Scroll Effect */
+  header.sticky {
+    background: #3b82f6; /* Solid color for sticky effect */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-in-out;
+  }
+  

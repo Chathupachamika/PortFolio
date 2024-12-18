@@ -1,43 +1,123 @@
 <div class="bg-gray-200 text-center p-10 rounded-lg shadow-lg">
     <div 
-    alt="Profile Picture" 
-    role="img"
-    aria-label="Profile Picture"
-    class="rounded-full mx-auto w-40 h-40 border-4 border-blue-500 shadow-md bg-cover bg-center image"
-  ></div>
-    <h1 class="text-3xl font-extrabold mt-6 text-gray-800">Chathupa Chamika</h1>
-    <p class="mt-4 text-lg text-gray-600">
-      Hello! I'm a passionate developer from Ambalangoda, Sri Lanka. I specialize in front-end,
-      back-end, and full-stack development. Currently, I am a trainee Full Stack Developer at ICET, 
-      focused on delivering innovative solutions and seamless user experiences.
-    </p>
-    <div class="mt-6 flex flex-wrap justify-center gap-6">
-      <a href="https://github.com/Chathupachamika" 
-         target="_blank" 
-         class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg font-semibold transition">
-        GitHub
-      </a>
-      <a href="https://linkedin.com/in/chathupa-chamika-" 
-         target="_blank" 
-         class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg font-semibold transition">
-        LinkedIn
-      </a>
-      <a href="mailto:Chathupachamika765@gmail.com" 
-         class="bg-gray-800 hover:bg-gray-900 text-white py-2 px-4 rounded-lg font-semibold transition">
-        Contact Me
-      </a>
+      alt="Profile Picture" 
+      role="img"
+      aria-label="Profile Picture"
+      class="rounded-full mx-auto w-60 h-60 border-4 border-blue-500 shadow-md bg-cover bg-center image">
     </div>
+    
+    <h1 class="text-3xl font-extrabold mt-6 text-gray-800">Chathupa Chamika</h1>
+
+    <!-- Apply animation to paragraphs -->
+    <p class="neon-animation-text mt-4">
+      Hello! I'm a passionate developer from Ambalangoda, Sri Lanka. I specialize in front-end, back-end,
+      and full-stack development. Currently preparing for my university journey, I'm focused on delivering 
+      innovative solutions with seamless user experiences.
+    </p>
+
+    <div class="mt-6 flex flex-wrap justify-center gap-6">
+        <a href="https://github.com/Chathupachamika" 
+           target="_blank" 
+           class="neon-btn github-btn flex items-center justify-center">
+          <i class="fab fa-github"></i> GitHub
+        </a>
+        <a href="https://linkedin.com/in/chathupa-chamika-" 
+           target="_blank" 
+           class="neon-btn linkedin-btn flex items-center justify-center">
+          <i class="fab fa-linkedin"></i> LinkedIn
+        </a>
+        <a href="mailto:Chathupachamika765@gmail.com" 
+           class="neon-btn email-btn flex items-center justify-center">
+          <i class="fas fa-envelope"></i> Contact Me
+        </a>
+    </div>
+    
+    <!-- Download CV Section -->
+    <div class="mt-10">
+      <button 
+        class="neon-btn px-6 py-2 rounded-lg font-semibold transition-all transform hover:scale-110 hover:bg-blue-600 bg-blue-500 text-white"
+        (click)="downloadCV()">
+        Download CV
+      </button>
+    </div>
+    
     <div class="mt-10 text-gray-700 text-left max-w-2xl mx-auto">
       <h2 class="text-xl font-bold mb-4">About Me</h2>
-      <p>
+      
+      <!-- Apply animation to the second paragraph -->
+      <p class="neon-animation-text">
         I am an enthusiastic university student and a certified developer from ICET, pursuing a diploma in software engineering. 
         My expertise lies in Java, JavaScript, and Spring Boot, and I have hands-on experience in building custom web and mobile applications. 
         I thrive in dynamic environments where I can apply my skills to create impactful and user-friendly solutions.
       </p>
-      <p class="mt-4">
+
+      <p class="mt-4 neon-animation-text">
         Beyond coding, I have a keen interest in web security, Spring Security, and leveraging technology for social good. 
         My goal is to continuously learn and grow as a developer while contributing to meaningful projects.
       </p>
     </div>
-  </div>
+</div>
+
+<!-- Add TailwindCSS for animation -->
+<style>
+  .neon-btn {
+    position: relative;
+    overflow: hidden;
+  }
+  .neon-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: rgba(255, 255, 255, 0.3);
+    transition: all 0.5s;
+    transform: translate(-50%, -50%) rotate(45deg);
+    animation: neon-animation 2s infinite;
+  }
+  .neon-btn:hover::before {
+    width: 0;
+    height: 0;
+  }
   
+  @keyframes neon-animation {
+    0% {
+      transform: translate(-50%, -50%) rotate(45deg) scale(0.8);
+      background: rgba(255, 255, 255, 0.3);
+    }
+    50% {
+      transform: translate(-50%, -50%) rotate(45deg) scale(1);
+      background: rgba(255, 255, 255, 0.5);
+    }
+    100% {
+      transform: translate(-50%, -50%) rotate(45deg) scale(0.8);
+      background: rgba(255, 255, 255, 0.3);
+    }
+  }
+
+  /* Custom neon animation for text */
+  .neon-animation-text {
+    position: relative;
+    display: inline-block;
+    font-weight: bold;
+    font-size: 1.125rem;
+    color: #333;
+    animation: neon-text 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes neon-text {
+    0% {
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6);
+      color: #333;
+    }
+    50% {
+      text-shadow: 0 0 20px rgba(255, 255, 255, 1), 0 0 30px rgba(255, 255, 255, 0.8);
+      color: #000;
+    }
+    100% {
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6);
+      color: #333;
+    }
+  }
+</style>

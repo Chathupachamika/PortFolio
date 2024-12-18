@@ -1,0 +1,148 @@
+.skill-card {
+    opacity: 0;
+    animation: fade-in 0.5s ease-in-out forwards, neon-glow 1.5s infinite alternate;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes neon-glow {
+    0% {
+        box-shadow: 0 0 20px rgba(0, 0, 255, 0.8), 0 0 40px rgba(0, 0, 255, 0.6);
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(255, 0, 0, 0.8), 0 0 40px rgba(255, 0, 0, 0.6);
+    }
+}
+
+.skill-card:nth-child(even) {
+    animation-delay: 0.2s;
+}
+
+.skill-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.skill-card:hover .water-fill {
+    width: 100%;
+}
+
+.water-fill {
+    width: 0%;
+    height: 4px;
+    background-color: #00bcd4;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transition: width 0.4s ease-in-out;
+}
+
+.skill-card:hover .water-fill {
+    width: 100%;
+}
+
+/* Neon Hover Effects for Icons and Text */
+.skill-card:hover h3, .skill-card:hover p {
+    color: #ff4081;
+    text-shadow: 0 0 8px rgba(255, 0, 129, 0.6);
+}
+
+.skill-card .flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.skill-card .text-4xl {
+    transition: color 0.3s ease-in-out;
+    color: #00bcd4;
+}
+
+/* Scale Animation */
+.skill-card:hover .text-4xl {
+    transform: scale(1.2);
+    color: #ff4081;
+}
+
+/* Custom Shimmer Effect */
+.skill-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(60deg, rgba(255, 255, 255, 0.2) 25%, rgba(0, 0, 0, 0.1) 50%, rgba(255, 255, 255, 0.2) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite linear;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+/* Additional Styles for Layout */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.text-xl {
+    font-size: 1.25rem;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.text-sm {
+    font-size: 0.875rem;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.bg-gray-100 {
+    background-color: #f7fafc;
+}
+
+.rounded-lg {
+    border-radius: 0.5rem;
+}
+
+.shadow-lg {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.mb-8 {
+    margin-bottom: 2rem;
+}
+
+.p-10 {
+    padding: 2.5rem;
+}
+
+.mt-10 {
+    margin-top: 2.5rem;
+}
