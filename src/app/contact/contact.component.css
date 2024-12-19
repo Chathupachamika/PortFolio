@@ -1,4 +1,4 @@
-/* Neon Button Base Styles */
+
 .neon-btn {
     position: relative;
     display: inline-flex;
@@ -37,7 +37,7 @@
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
   }
   
-  /* Individual Button Colors */
+  
   .github-btn {
     background-color: #333333;
   }
@@ -75,7 +75,7 @@
     height: 24px;
   }
   
-  /* Neon Animation */
+  
   @keyframes neon-animation {
     0% {
       transform: translate(-50%, -50%) rotate(45deg) scale(0.8);
