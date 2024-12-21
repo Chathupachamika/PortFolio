@@ -1,100 +1,58 @@
-/* Header Gradient and Animation */
-header {
-    background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
-    background-size: 300% 300%;
-    animation: gradient-animation 6s ease infinite;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    position: sticky;
-    top: 0;
-    z-index: 50;
+/* Neon Button Styles */
+.neon-btn {
+  display: inline-block;
+  padding: 6px 12px;
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-align: center;
+  border: 2px solid #4ade80;
+  border-radius: 4px;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0px 0px 8px rgba(72, 189, 255, 0.6);
+  background: linear-gradient(45deg, #14b8a6, #1d4ed8);
+  position: relative;
+}
+
+.neon-btn:hover {
+  background: linear-gradient(45deg, #22d3ee, #2563eb);
+  transform: scale(1.1);
+  box-shadow: 0px 0px 15px rgba(72, 189, 255, 1);
+}
+
+/* Neon Text Animation */
+.neon-text {
+  color: #fff;
+  text-shadow: 0 0 5px #4ade80, 0 0 10px #4ade80, 0 0 20px #4ade80;
+  animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow {
+  from {
+      text-shadow: 0 0 5px #4ade80, 0 0 10px #4ade80, 0 0 20px #4ade80;
   }
-  
-  /* Gradient Animation */
-  @keyframes gradient-animation {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
+  to {
+      text-shadow: 0 0 10px #4ade80, 0 0 15px #4ade80, 0 0 25px #4ade80;
   }
-  
-  /* Header Container */
-  header .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 1.5rem;
-  }
-  
-  /* Logo Styling */
-  header .text-3xl {
-    font-family: 'Poppins', sans-serif;
-    transition: all 0.3s ease-in-out;
-  }
-  
-  header .text-3xl:hover {
-    color: #fbbf24; /* Golden yellow */
-    transform: scale(1.1) rotate(3deg);
-  }
-  
-  /* Navigation Styling */
-  header nav ul {
-    display: flex;
-    gap: 1.5rem;
-  }
-  
-  header nav a {
-    font-size: 1rem;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    transition: all 0.3s ease-in-out;
-    position: relative;
-  }
-  
-  /* Hover Effects */
-  header nav a:hover {
-    color: #fbbf24;
-    transform: scale(1.1);
-    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.5);
-  }
-  
-  /* Background Highlight Effect */
-  header nav a:hover::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 50%;
-    width: 80%;
-    height: 3px;
-    background: #fbbf24;
-    border-radius: 3px;
-    transform: translateX(-50%);
-    opacity: 1;
-    transition: width 0.3s ease-in-out;
-  }
-  
-  header nav a::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 50%;
-    width: 0;
-    height: 3px;
-    background: #fbbf24;
-    border-radius: 3px;
-    opacity: 0;
-    transition: width 0.3s ease-in-out;
-  }
-  
-  /* On Scroll Effect */
-  header.sticky {
-    background: #3b82f6; /* Solid color for sticky effect */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease-in-out;
-  }
-  
+}
+
+/* Video Wrapper Styling */
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  height: 10rem; /* Match your desired height */
+  overflow: hidden;
+  border-radius: 0.5rem;
+}
+
+.video-wrapper video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: filter 0.3s, transform 0.3s;
+}
+
+.video-wrapper:hover video {
+  filter: brightness(1.2);
+  transform: scale(1.05);
+}
