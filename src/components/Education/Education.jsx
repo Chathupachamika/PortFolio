@@ -15,30 +15,45 @@ import Typography from '@mui/material/Typography';
 
 function Education() {
   return (
+    <div className="text-white mb-36 flex flex-col items-center justify-center p-40" id="education">
+      {/* Neon Header */}
+      <div className="flex flex-col items-center justify-center min-h-screen bg-black">
+  <h1
+    className="text-5xl font-semibold mb-32"
+    style={{
+      color: '#39ff14', 
+      textAlign: 'center', 
+      textShadow: '0 0 10px #39ff14, 0 0 20px #39ff14, 0 0 30px #32cd32', 
+      fontFamily: 'Cinzel, serif', 
+    }}
+  >
+    EDUCATION
+  </h1>
+</div>
+
     <Timeline position="alternate">
       {/* School Life */}
       <TimelineItem>
         <TimelineOppositeContent
-          sx={{ m: 'auto 0' }}
+          sx={{ m: 'auto 0', color: 'white',fontFamily: 'Courier New, monospace' }}
           align="right"
           variant="body2"
-          color="text.secondary"
         >
           January 2012 - December 2022
         </TimelineOppositeContent>
         <TimelineSeparator>
-          <TimelineConnector />
+          <TimelineConnector sx={{ bgcolor: 'black' }} />
           <TimelineDot>
-            <SchoolIcon />
+            <SchoolIcon style={{ color: 'blue' }} />
           </TimelineDot>
-          <TimelineConnector />
+          <TimelineConnector sx={{ bgcolor: 'gray' }} />
         </TimelineSeparator>
-        <TimelineContent sx={{ py: '12px', px: 2 }}>
+        <TimelineContent sx={{ py: '12px', px: 2, color: 'white', fontFamily: 'Verdana, sans-serif' }}>
           <Typography variant="h6" component="span">
             School Life
           </Typography>
           <Typography>
-            Attended XYZ College, completing both GCE O/L and A/L exams in the Physical Science stream.
+            Attended G/P.De S.Kularathne College, completing both GCE O/L and A/L exams in the Physical Science stream.
           </Typography>
           <Typography>Active participant in science and computer clubs.</Typography>
         </TimelineContent>
@@ -47,21 +62,20 @@ function Education() {
       {/* ICET Life */}
       <TimelineItem>
         <TimelineOppositeContent
-          sx={{ m: 'auto 0' }}
+          sx={{ m: 'auto 0', color: 'white', fontFamily: 'Courier New, monospace' }}
           align="right"
           variant="body2"
-          color="text.secondary"
         >
           February 2024 - December 2024
         </TimelineOppositeContent>
         <TimelineSeparator>
-          <TimelineConnector />
+          <TimelineConnector sx={{ bgcolor: 'gray' }} />
           <TimelineDot>
-            <SchoolIcon />
+            <SchoolIcon style={{ color: 'green' }} />
           </TimelineDot>
-          <TimelineConnector />
+          <TimelineConnector sx={{ bgcolor: 'gray' }} />
         </TimelineSeparator>
-        <TimelineContent sx={{ py: '12px', px: 2 }}>
+        <TimelineContent sx={{ py: '12px', px: 2, color: 'white', fontFamily: 'Verdana, sans-serif' }}>
           <Typography variant="h6" component="span">
             iCET Certified Developer (ICD)
           </Typography>
@@ -75,20 +89,19 @@ function Education() {
       {/* Full Stack Developer */}
       <TimelineItem>
         <TimelineOppositeContent
-          sx={{ m: 'auto 0' }}
+          sx={{ m: 'auto 0', color: 'white', fontFamily: 'Courier New, monospace' }}
           variant="body2"
-          color="text.secondary"
         >
-          2024 - Present
+          2024 February - 2024 November
         </TimelineOppositeContent>
         <TimelineSeparator>
-          <TimelineConnector />
+          <TimelineConnector sx={{ bgcolor: 'gray' }} />
           <TimelineDot color="primary">
-            <CodeIcon />
+            <CodeIcon style={{ color: 'white' }} />
           </TimelineDot>
-          <TimelineConnector />
+          <TimelineConnector sx={{ bgcolor: 'gray' }} />
         </TimelineSeparator>
-        <TimelineContent sx={{ py: '12px', px: 2 }}>
+        <TimelineContent sx={{ py: '12px', px: 2, color: 'white', fontFamily: 'Calibri, sans-serif' }}>
           <Typography variant="h6" component="span">
             Full Stack Developer - Trainee
           </Typography>
@@ -104,13 +117,13 @@ function Education() {
       {/* Web Security */}
       <TimelineItem>
         <TimelineSeparator>
-          <TimelineConnector />
+          <TimelineConnector sx={{ bgcolor: 'gray' }} />
           <TimelineDot color="primary" variant="outlined">
-            <SecurityIcon />
+            <SecurityIcon style={{ color: 'white' }} />
           </TimelineDot>
-          <TimelineConnector sx={{ bgcolor: 'secondary.main' }} />
+          <TimelineConnector sx={{ bgcolor: 'gray' }} />
         </TimelineSeparator>
-        <TimelineContent sx={{ py: '12px', px: 2 }}>
+        <TimelineContent sx={{ py: '12px', px: 2, color: 'white', fontFamily: 'Tahoma, sans-serif' }}>
           <Typography variant="h6" component="span">
             Web Security
           </Typography>
@@ -123,13 +136,13 @@ function Education() {
       {/* Deployment */}
       <TimelineItem>
         <TimelineSeparator>
-          <TimelineConnector sx={{ bgcolor: 'secondary.main' }} />
+          <TimelineConnector sx={{ bgcolor: 'gray' }} />
           <TimelineDot color="secondary">
-            <GitHubIcon />
+            <GitHubIcon style={{ color: 'white' }} />
           </TimelineDot>
-          <TimelineConnector />
+          <TimelineConnector sx={{ bgcolor: 'gray' }} />
         </TimelineSeparator>
-        <TimelineContent sx={{ py: '12px', px: 2 }}>
+        <TimelineContent sx={{ py: '12px', px: 2, color: 'white', fontFamily: 'Lucida Console, monospace' }}>
           <Typography variant="h6" component="span">
             Deployment
           </Typography>
@@ -142,13 +155,13 @@ function Education() {
       {/* Mobile Application Development */}
       <TimelineItem>
         <TimelineSeparator>
-          <TimelineConnector />
+          <TimelineConnector sx={{ bgcolor: 'gray' }} />
           <TimelineDot color="primary">
-            <MobileFriendlyIcon />
+            <MobileFriendlyIcon style={{ color: 'white' }} />
           </TimelineDot>
-          <TimelineConnector />
+          <TimelineConnector sx={{ bgcolor: 'gray' }} />
         </TimelineSeparator>
-        <TimelineContent sx={{ py: '12px', px: 2 }}>
+        <TimelineContent sx={{ py: '12px', px: 2, color: 'white', fontFamily: 'Impact, sans-serif' }}>
           <Typography variant="h6" component="span">
             Mobile Application Development
           </Typography>
@@ -158,6 +171,7 @@ function Education() {
         </TimelineContent>
       </TimelineItem>
     </Timeline>
+    </div>
   );
 }
 

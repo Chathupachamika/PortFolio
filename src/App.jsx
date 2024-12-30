@@ -2,6 +2,7 @@ import React from 'react'
 import Header from './components/Header/Header';
 import Contact from './components/Contact/Contact'
 import Education from './components/Education/Education';
+import TechStack from './components/TechStack/TechStack'
 import Background from './components/Background';
 
 export default function App() {
@@ -14,7 +15,7 @@ export default function App() {
         
         <Header />
         <Education />
-        
+        <TechStack />
         <Contact />
       </main>
  
