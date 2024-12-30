@@ -42,6 +42,7 @@ const Contact = () => {
   };
 
   return (
+    <section className="text-white mb-36 flex flex-col items-center justify-center p-40" id="contact">
     <React.Fragment>
       <CssBaseline />
       <Container maxWidth="sm">
@@ -146,6 +147,7 @@ const Contact = () => {
         </Box>
       </Container>
     </React.Fragment>
+    </section>
   );
 };
 

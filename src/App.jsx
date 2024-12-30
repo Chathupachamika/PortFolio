@@ -1,9 +1,10 @@
 import React from 'react'
 import Header from './components/Header/Header';
-import About from './components/About/About'
-import Contact from './components/Contact/Contact'
+import About from './components/About/About';
+import Contact from './components/Contact/Contact';
+import Project from './components/Project/Project';
 import Education from './components/Education/Education';
-import TechStack from './components/TechStack/TechStack'
+import TechStack from './components/TechStack/TechStack';
 import Background from './components/Background';
 
 export default function App() {
@@ -19,6 +20,7 @@ export default function App() {
         <Education />
        
         <TechStack />
+        <Project />
         <Contact />
       </main>
  

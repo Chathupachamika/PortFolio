@@ -70,6 +70,7 @@ function TechStack() {
         <div
   className="text-7xl font-bold mb-32 flex flex-col items-center justify-center min-h-screen bg-black"
   style={{
+    marginTop:'90px',
     color: '#00aaff',
     textAlign: 'center',
     textShadow: '0 0 15px #00aaff, 0 0 30px #00aaff, 0 0 45px #0088cc',
@@ -79,7 +80,7 @@ function TechStack() {
 >
   TECHNOLOGIES
 </div>
-
+<br /><br />
 
         {categories.map((category, index) => (
           <div key={index} className="mb-12">
@@ -97,9 +98,15 @@ function TechStack() {
               sx={{
                 width: '100%',
                 height: 'auto',
-                overflowY: 'scroll',
-                backgroundColor: '#121212', // Dark background for contrast
+                backgroundColor: 'rgba(18, 18, 18, 0.5)', 
+                overflowY: 'auto',
+                overflowX: 'hidden',
+  scrollbarWidth: 'none', 
+                '&::-webkit-scrollbar': {
+                  display: 'none', 
+                },
               }}
+              
             >
               <ImageList variant="masonry" cols={4} gap={16}>
                 {category.skills.map((skill, idx) => (
