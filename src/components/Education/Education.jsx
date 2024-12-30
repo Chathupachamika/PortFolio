@@ -18,17 +18,18 @@ function Education() {
     <div className="text-white mb-36 flex flex-col items-center justify-center p-40" id="education">
       {/* Neon Header */}
       <div className="flex flex-col items-center justify-center min-h-screen bg-black">
-  <h1
+  <div
     className="text-5xl font-semibold mb-32"
     style={{
       color: '#39ff14', 
       textAlign: 'center', 
       textShadow: '0 0 10px #39ff14, 0 0 20px #39ff14, 0 0 30px #32cd32', 
-      fontFamily: 'Cinzel, serif', 
+      fontFamily: 'Cinzel, serif',
+      fontSize:'40px', 
     }}
   >
     EDUCATION
-  </h1>
+  </div>
 </div>
 
     <Timeline position="alternate">
@@ -172,7 +173,9 @@ function Education() {
       </TimelineItem>
     </Timeline>
     </div>
+    
   );
 }
+
 
 export default Education;
