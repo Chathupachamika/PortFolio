@@ -15,6 +15,7 @@
     "@fontsource/roboto": "^5.1.0",
     "@fortawesome/fontawesome-free": "^6.7.1",
     "@mui/icons-material": "^6.3.0",
+    "@mui/lab": "^6.0.0-beta.21",
     "@mui/material": "^6.3.0",
     "@tailwindcss/forms": "^0.5.9",
     "@tailwindcss/typography": "^0.5.15",
@@ -24,7 +25,9 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.4.0",
-    "three": "^0.171.0"
+    "sweetalert2": "^11.15.3",
+    "three": "^0.171.0",
+    "tw-elements-react": "^1.0.0-alpha-end"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",

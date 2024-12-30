@@ -22,46 +22,69 @@ function Background() {
     renderer.setPixelRatio(window.devicePixelRatio);
     container.appendChild(renderer.domElement);
 
-    // Star field geometry
-    const starGeometry = new THREE.BufferGeometry();
-    const starCount = 1500; // Increased number of stars
-    const starPositions = new Float32Array(starCount * 3);
-    const starSizes = new Float32Array(starCount);
+    // Create multiple star fields with different colors
+    const createStarField = (color, count, size, speed) => {
+      const geometry = new THREE.BufferGeometry();
+      const positions = new Float32Array(count * 3);
+      const sizes = new Float32Array(count);
+      const speeds = new Float32Array(count);
 
-    for (let i = 0; i < starCount; i++) {
-      starPositions[i * 3] = (Math.random() - 0.5) * 2000; // X position
-      starPositions[i * 3 + 1] = (Math.random() - 0.5) * 2000; // Y position
-      starPositions[i * 3 + 2] = (Math.random() - 0.5) * 2000; // Z position
-      starSizes[i] = Math.random() * 2 + 0.5; // Randomized star sizes
-    }
+      for (let i = 0; i < count; i++) {
+        positions[i * 3] = (Math.random() - 0.5) * 2000;
+        positions[i * 3 + 1] = (Math.random() - 0.5) * 2000;
+        positions[i * 3 + 2] = (Math.random() - 0.5) * 2000;
+        sizes[i] = Math.random() * size ;
+        speeds[i] = Math.random() * speed;
+      }
 
-    starGeometry.setAttribute(
-      'position',
-      new THREE.BufferAttribute(starPositions, 3)
-    );
-    starGeometry.setAttribute(
-      'size',
-      new THREE.BufferAttribute(starSizes, 1)
-    );
+      geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+      geometry.setAttribute('speed', new THREE.BufferAttribute(speeds, 1));
 
-    // Star material with glow effect
-    const starMaterial = new THREE.PointsMaterial({
-      color: 0xaaaaee,
-      size: 1.5,
-      sizeAttenuation: true,
-      transparent: true,
-      opacity: 0.8,
-    });
+      const material = new THREE.PointsMaterial({
+        size: 2,
+        color: color,
+        transparent: true,
+        opacity: 0.8,
+        blending: THREE.AdditiveBlending,
+        vertexColors: false,
+      });
 
-    const stars = new THREE.Points(starGeometry, starMaterial);
-    scene.add(stars);
+      return new THREE.Points(geometry, material);
+    };
+
+    // Create multiple star fields with neon colors
+    const starFields = [
+      createStarField(0xff00ff, 500, 2, 0.02),  // Neon pink
+      createStarField(0x00ffff, 500, 2, 0.015), // Neon cyan
+      createStarField(0xff3366, 500, 2, 0.025), // Neon red
+      createStarField(0x33ff33, 500, 2, 0.018)  // Neon green
+    ];
+
+    starFields.forEach(stars => scene.add(stars));
 
     // Animation loop
     const animate = () => {
       requestAnimationFrame(animate);
 
-      // Rotate the stars and add a subtle parallax camera effect
-      stars.rotation.y += 0.0005;
+      starFields.forEach((stars, index) => {
+        // Rotate each star field differently
+        stars.rotation.y += 0.0003 * (index + 1);
+        stars.rotation.x += 0.0002 * (index + 1);
+
+        // Pulse effect for star sizes
+        const positions = stars.geometry.attributes.position.array;
+        const sizes = stars.geometry.attributes.size.array;
+        const speeds = stars.geometry.attributes.speed.array;
+
+        for (let i = 0; i < sizes.length; i++) {
+          const pulseFactor = Math.sin(Date.now() * speeds[i] * 0.001) * 0.5 + 1;
+          sizes[i] = (Math.random() * 2 + 0.5) * pulseFactor;
+        }
+        stars.geometry.attributes.size.needsUpdate = true;
+      });
+
+      // Camera movement
       camera.position.x = Math.sin(Date.now() * 0.0001) * 0.5;
       camera.position.y = Math.cos(Date.now() * 0.0001) * 0.5;
 
@@ -79,10 +102,14 @@ function Background() {
 
     window.addEventListener('resize', handleResize);
 
-    // Cleanup on component unmount
+    // Cleanup
     return () => {
       window.removeEventListener('resize', handleResize);
       container.removeChild(renderer.domElement);
+      starFields.forEach(stars => {
+        stars.geometry.dispose();
+        stars.material.dispose();
+      });
     };
   }, []);
 
@@ -97,7 +124,7 @@ function Background() {
         height: '100%',
         zIndex: -1,
         overflow: 'hidden',
-        background: 'radial-gradient(circle, #0a0a0a, #000)', // Gradient background
+        background: 'radial-gradient(circle, #120012, #000)', // Darker gradient for better contrast
       }}
     />
   );
