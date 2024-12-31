@@ -12,6 +12,7 @@ import Fade from '@mui/material/Fade';
 import mos from '../../assets/images/burgers.jpg';
 import clothify from '../../assets/images/clothify.jpg';
 import country from '../../assets/images/country.jpg';
+import userform from '../../assets/images/userform.jpg';
 import defense from '../../assets/images/defense.jpg';
 import todo from '../../assets/images/todo.jpg';
 import weather from '../../assets/images/weather.jpg';
@@ -25,7 +26,7 @@ const projects = [
       'A comprehensive campus management web application with intuitive interfaces and robust Java Spring Boot backend for streamlined educational and administrative workflows.',
     image: zony,
     alt: 'ZONY Campus Smart LMS',
-    link: 'https://github.com/Chathupachamika/Portfolio',
+    link: 'https://github.com/Chathupachamika/ZONY-Campus',
     technologies: ['Angular', 'Java', 'Spring Boot', 'MySQL', 'Rest API', 'AI bot Gemini'],
   },
   {
@@ -33,7 +34,7 @@ const projects = [
     description: 'E-commerce platform built with modern technologies for seamless shopping experience.',
     image: clothify,
     alt: 'Clothify Store',
-    link: 'https://github.com/Chathupachamika/E-commerce',
+    link: 'https://github.com/Chathupachamika/Clothify_Store-app',
     technologies: ['JavaFX', 'Java'],
   },
   {
@@ -41,7 +42,7 @@ const projects = [
     description: 'Real-time weather application that allows users to view current weather conditions and forecasts for their location.',
     image: weather,
     alt: 'Weather Application',
-    link: 'https://github.com/Chathupachamika/weather-app',
+    link: 'https://chathupachamika.github.io/Weather_site/',
     technologies: ['HTML', 'CSS', 'JavaScript', 'API Handling'],
   },
   {
@@ -62,6 +63,15 @@ const projects = [
     technologies: ['JavaFX', 'Java'],
   },
   {
+    title: 'User Form Application',
+    description:
+      'A MERN stack user form is a full-stack application built with MongoDB, Express, React, and Node.js, enabling seamless user input, data storage, and dynamic UI updates.',
+    image: userform,
+    alt: 'User form',
+    link: 'https://github.com/Chathupachamika/User_Form-crud--MERN-Stack',
+    technologies: ['React', 'Node JS', 'MongoDB','Express JS'],
+  },
+  {
     title: 'Country Information Site',
     description:
       'A web application displaying country-specific data such as population, language, and geography with a clean and responsive design.',
@@ -76,7 +86,7 @@ const projects = [
       'An innovative solution designed to streamline prescription processes, improve accuracy, and enhance healthcare delivery with robust security and advanced features.',
     image: wecare,
     alt: 'WeCare Prescription Management System',
-    link: 'https://github.com/Chathupachamika/WeCare',
+    link: 'https://github.com/iCET-110/Hospital-Management-Frontend',
     technologies: ['Spring Boot', 'Microservices', 'Maven', 'MySQL', 'Angular', 'TypeScript'],
   },
   {
@@ -85,7 +95,7 @@ const projects = [
       'A standalone application featuring an intuitive user interface for efficient restaurant management.',
     image: mos,
     alt: 'MOS Burgers',
-    link: 'https://github.com/Chathupachamika/mos-burgers',
+    link: 'https://chathupachamika.github.io/MOS_Burgers_project/',
     technologies: ['HTML', 'CSS', 'JavaScript', 'RestAPI'],
   },
 ];

@@ -21,7 +21,7 @@ function Education() {
   <div
     className="text-5xl font-semibold mb-32"
     style={{
-      marginTop:'90px',
+      marginTop:'-19px',
       color: '#39ff14', 
       textAlign: 'center', 
       textShadow: '0 0 10px #39ff14, 0 0 20px #39ff14, 0 0 30px #32cd32', 
