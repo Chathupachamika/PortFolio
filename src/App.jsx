@@ -6,6 +6,7 @@ import Project from './components/Project/Project';
 import Education from './components/Education/Education';
 import TechStack from './components/TechStack/TechStack';
 import Background from './components/Background';
+import Footer from './components/Footer/Footer';
 
 export default function App() {
   return (
@@ -23,8 +24,7 @@ export default function App() {
         <Project />
         <Contact />
       </main>
- 
-
+      <Footer />
     </>
   )
 }

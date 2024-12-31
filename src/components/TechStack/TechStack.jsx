@@ -100,6 +100,8 @@ function TechStack() {
                 height: 'auto',
                 backgroundColor: 'rgba(18, 18, 18, 0.5)', 
                 overflowY: 'auto',
+                marginTop: '40px',
+                marginBottom: '100px',
                 overflowX: 'hidden',
   scrollbarWidth: 'none', 
                 '&::-webkit-scrollbar': {

@@ -158,7 +158,7 @@ const About = () => {
                       borderRadius: "30px",
                       padding: "2px",
                       background:
-                        "linear-gradient(90deg, #f953c6, #00f2fe, #4facfe, #f953c6)",
+                        "linear-gradient(90deg, #ebdb34, #00f2fe, #4facfe, #ebdb34)",
                       mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
                       WebkitMask:
                         "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
