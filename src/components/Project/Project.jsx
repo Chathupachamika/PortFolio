@@ -102,10 +102,9 @@ const projects = [
 
 function Project() {
     return (
-      <div>
+      <div id="project">
         {/* Section Title */}
         <div
-          id="project"
           className="text-7xl font-bold mb-32 flex flex-col items-center justify-center min-h-screen bg-black"
           style={{
             marginTop:'90px',
