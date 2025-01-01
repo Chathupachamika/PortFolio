@@ -23,14 +23,16 @@ document.head.appendChild(style);
 const About = () => {
   return (
     <Grid
-      container id='home'
+      container
+      id="home"
       alignItems="center"
       sx={{
-        marginTop:'-50px',
+        marginTop: "-50px",
         minHeight: "100vh",
-        textAlign: "left",
+        textAlign: { xs: "center", md: "left" },
         background: "transparent",
         color: "white",
+        padding: { xs: "2rem", md: "0" },
       }}
     >
       {/* Profile Image */}
@@ -41,6 +43,7 @@ const About = () => {
         sx={{
           display: "flex",
           justifyContent: "center",
+          marginBottom: { xs: "2rem", md: "0" },
         }}
       >
         <motion.div
@@ -52,11 +55,13 @@ const About = () => {
             src={myImage}
             alt="Chathupa Profile"
             style={{
-              width: "300px",
-              height: "300px",
+              width: "80%",
+              maxWidth: "300px",
+              height: "auto",
               borderRadius: "50%",
               boxShadow: "0 0 20px rgba(128, 0, 255, 0.8)",
               border: "5px solid rgba(128, 0, 255, 0.8)",
+              marginTop: "10px", // Adjust this for mobile responsiveness
             }}
           />
         </motion.div>
@@ -72,7 +77,7 @@ const About = () => {
           <Typography
             component="h1"
             sx={{
-              fontSize: "3rem",
+              fontSize: { xs: "2rem", md: "3rem" },
               fontWeight: "bold",
               background: "linear-gradient(to right, #4facfe, #00f2fe)",
               WebkitBackgroundClip: "text",
@@ -84,7 +89,7 @@ const About = () => {
           <Typography
             component="h2"
             sx={{
-              fontSize: "1.8rem",
+              fontSize: { xs: "1.2rem", md: "1.8rem" },
               fontWeight: "bold",
               background: "linear-gradient(to right, #f953c6, #b91d73)",
               WebkitBackgroundClip: "text",
@@ -96,7 +101,7 @@ const About = () => {
           </Typography>
           <Typography
             sx={{
-              fontSize: "1rem",
+              fontSize: { xs: "0.9rem", md: "1rem" },
               color: "rgba(255, 255, 255, 0.8)",
               marginTop: "1.5rem",
             }}
@@ -115,7 +120,7 @@ const About = () => {
             sx={{
               marginTop: "2rem",
               display: "flex",
-              justifyContent: "flex-start",
+              justifyContent: { xs: "center", md: "flex-start" },
             }}
           >
             <motion.div
