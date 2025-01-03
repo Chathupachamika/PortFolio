@@ -16,7 +16,7 @@ import Typography from '@mui/material/Typography';
 function Education() {
   return (
     <div className="text-white mb-36 flex flex-col items-center justify-center p-40" id="education">
-      {/* Neon Header */}
+      { }
       <div className="flex flex-col items-center justify-center min-h-screen bg-black">
   <div
     className="text-5xl font-semibold mb-32"
@@ -34,7 +34,7 @@ function Education() {
 </div><br /><br />
 
     <Timeline position="alternate">
-      {/* School Life */}
+      { }
       <TimelineItem>
         <TimelineOppositeContent
           sx={{ m: 'auto 0', color: 'white',fontFamily: 'Courier New, monospace' }}
@@ -61,7 +61,7 @@ function Education() {
         </TimelineContent>
       </TimelineItem>
 
-      {/* ICET Life */}
+      { }
       <TimelineItem>
         <TimelineOppositeContent
           sx={{ m: 'auto 0', color: 'white', fontFamily: 'Courier New, monospace' }}
@@ -88,7 +88,7 @@ function Education() {
         </TimelineContent>
       </TimelineItem>
 
-      {/* Full Stack Developer */}
+      { }
       <TimelineItem>
         <TimelineOppositeContent
           sx={{ m: 'auto 0', color: 'white', fontFamily: 'Courier New, monospace' }}
@@ -135,7 +135,7 @@ function Education() {
         </TimelineContent>
       </TimelineItem>
 
-      {/* Deployment */}
+      { }
       <TimelineItem>
         <TimelineSeparator>
           <TimelineConnector sx={{ bgcolor: 'gray' }} />
@@ -154,7 +154,7 @@ function Education() {
         </TimelineContent>
       </TimelineItem>
 
-      {/* Mobile Application Development */}
+      { }
       <TimelineItem>
         <TimelineSeparator>
           <TimelineConnector sx={{ bgcolor: 'gray' }} />
