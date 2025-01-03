@@ -12,7 +12,7 @@ export default function App() {
   return (
     <>
       <div className="relative mt-16">
-      <Background /> {/* Background of components */}
+      <Background /> { }
       </div>
       <main className='flex flex-col items-center px-4 md:px-8 lg:px-16 mt-16'>
         
