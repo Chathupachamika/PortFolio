@@ -5,7 +5,6 @@ import { FaDownload } from "react-icons/fa";
 import myImage from "../../assets/images/headshotchathupa.png";
 import cvFile from "../../assets/documents/ChathupaCV.pdf";
 
-// Neon Border Animation Keyframes
 const neonBorderKeyframes = `
   @keyframes neon-border {
     0% { background-position: 0% 50%; }
@@ -14,7 +13,6 @@ const neonBorderKeyframes = `
   }
 `;
 
-// Append keyframes to the document head
 const style = document.createElement("style");
 style.type = "text/css";
 style.innerHTML = neonBorderKeyframes;
@@ -61,7 +59,7 @@ const About = () => {
               borderRadius: "50%",
               boxShadow: "0 0 20px rgba(128, 0, 255, 0.8)",
               border: "5px solid rgba(128, 0, 255, 0.8)",
-              marginTop: "10px", // Adjust this for mobile responsiveness
+              marginTop: "10px", 
             }}
           />
         </motion.div>
