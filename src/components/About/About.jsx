@@ -65,7 +65,7 @@ const About = () => {
         </motion.div>
       </Grid>
 
-      {/* Details Section */}
+      {/* Details */}
       <Grid item xs={12} md={6}>
         <motion.div
           initial={{ x: 50, opacity: 0 }}
