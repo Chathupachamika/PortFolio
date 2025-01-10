@@ -52,7 +52,7 @@ function ResponsiveAppBar() {
     setAnchorElNav(null);
   };
 
-  const images = [profileimg, myImage, 'https://via.placeholder.com/200']; // Add your images here
+  const images = [profileimg, myImage, 'https://via.placeholder.com/200']; 
 
   const settings = {
     dots: true,
@@ -71,7 +71,7 @@ function ResponsiveAppBar() {
       >
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            {/* Logo or Title */}
+            { }
             <Typography
               variant="h6"
               component="a"
@@ -98,7 +98,7 @@ function ResponsiveAppBar() {
               Chathupa Chamika
             </Typography>
 
-            {/* Centered Navigation Menu for Desktop */}
+            { }
             <Box
               sx={{
                 flexGrow: 1,
@@ -140,7 +140,7 @@ function ResponsiveAppBar() {
               ))}
             </Box>
 
-            {/* Navigation Menu for Mobile */}
+            { }
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
               <IconButton
                 size="large"
@@ -184,7 +184,7 @@ function ResponsiveAppBar() {
                 </IconButton>
               ))}
 
-              {/* Avatar/Profile */}
+              { }
               <Tooltip title="Profile">
                 <IconButton sx={{ p: 0 }} onClick={handleAvatarClick}>
                   <Avatar alt="Chathupa Chamika" src={profileimg} />
@@ -195,7 +195,7 @@ function ResponsiveAppBar() {
         </Container>
       </AppBar>
 
-      {/* Dialog for Image Gallery */}
+      { }
       <Dialog open={openDialog} onClose={handleCloseDialog}>
         <DialogTitle>Image Gallery</DialogTitle>
         <DialogContent>

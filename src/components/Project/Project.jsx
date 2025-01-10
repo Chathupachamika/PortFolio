@@ -103,7 +103,7 @@ const projects = [
 function Project() {
     return (
       <div id="project">
-        {/* Section Title */}
+        { }
         <div
           className="text-7xl font-bold mb-32 flex flex-col items-center justify-center min-h-screen bg-black"
           style={{
@@ -118,7 +118,7 @@ function Project() {
           PROJECTS
         </div><br /><br />
   
-        {/* Projects Container */}
+        { }
         <div
           style={{
             display: 'flex',

@@ -69,7 +69,7 @@ function TechStack() {
   return (
     <section className="text-white mb-36 flex flex-col items-center justify-center p-40" id="tech">
       <div className="max-w-7xl mx-auto px-4">
-        {/* Neon Styled Title */}
+        { }
         <div
   className="text-7xl font-bold mb-32 flex flex-col items-center justify-center min-h-screen bg-black"
   style={{
@@ -87,7 +87,7 @@ function TechStack() {
 
         {categories.map((category, index) => (
           <div key={index} className="mb-12">
-            {/* Subheading */}
+            { }
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
