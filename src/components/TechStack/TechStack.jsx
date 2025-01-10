@@ -18,6 +18,7 @@ import mongoDb from '../../assets/Tech_Icon/mongodb.png';
 import cssIcon from '../../assets/Tech_Icon/css.png';
 import figmaIcon from '../../assets/Tech_Icon/figma.png';
 import bootstrapIcon from '../../assets/Tech_Icon/bootstrap.png';
+import postgresql from '../../assets/Tech_Icon/postgres.png';
 import postmanIcon from '../../assets/Tech_Icon/postman.png';
 
 function TechStack() {
@@ -46,7 +47,9 @@ function TechStack() {
       title: 'Database Management',
       skills: [
         { img: mysqlIcon, title: 'MySQL' },
-        { img: mongoDb, title: 'MongoDB' }
+        { img: postgresql, title: 'PostgreSQL' },
+        { img: mongoDb, title: 'MongoDB' },
+       
       ],
     },
     {
