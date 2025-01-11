@@ -1,6 +1,6 @@
 # Chathupa Chamika's Portfolio 🚀
 
-This repository showcases a personal portfolio website built using **React**, **Vite**, and **Tailwind CSS**. It highlights **Chathupa Chamika's** technical skills, projects, and achievements with a clean, modern, and responsive design. 
+This repository showcases a personal portfolio website built using **React**, **Vite**, and **Tailwind CSS**. It highlights **Chathupa Chamika's** technical skills, projects, and achievements with a clean, modern, and responsive design.
 
 ## Features ✨
 
