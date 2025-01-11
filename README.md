@@ -109,3 +109,6 @@ Contributions, issues, and feature requests are welcome! Feel free to check the 
 ## 💡 Acknowledgments
 - Thanks to the React, Vite, and Tailwind CSS communities
 - Special thanks to all contributors and supporters
+
+---
+Made with ❤️ by the Chathupa Chamika
