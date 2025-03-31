@@ -2,6 +2,24 @@
 
 import { motion } from "framer-motion"
 import { Card, CardContent } from "./ui/card"
+import javaIcon from '../assets/Tech_Icon/java.png';
+import jsIcon from '../assets/Tech_Icon/js.png';
+import dartIcon from '../assets/Tech_Icon/dart.png';
+import sqlIcon from '../assets/Tech_Icon/sql.png';
+import typescriptIcon from '../assets/Tech_Icon/typescript.png';
+import angularIcon from '../assets/Tech_Icon/angular.png';
+import springBootIcon from '../assets/Tech_Icon/spring-boot.png';
+import hibernateIcon from '../assets/Tech_Icon/hibernate.png';
+import javaFXIcon from '../assets/Tech_Icon/javafx.png';
+import flutterIcon from '../assets/Tech_Icon/flutter.png';
+import mysqlIcon from '../assets/Tech_Icon/mysql.png';
+import mongoDb from '../assets/Tech_Icon/mongodb.png';
+import cssIcon from '../assets/Tech_Icon/css.png';
+import figmaIcon from '../assets/Tech_Icon/figma.png';
+import bootstrapIcon from '../assets/Tech_Icon/bootstrap.png';
+import postgresql from '../assets/Tech_Icon/postgres.png';
+import postmanIcon from '../assets/Tech_Icon/postman.png';
+
 import { Badge } from "./ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs"
 
@@ -11,46 +29,46 @@ export default function TechStack() {
       id: "languages",
       name: "Programming Languages",
       skills: [
-        { name: "Java", icon: "/tech-icons/java.png" },
-        { name: "JavaScript", icon: "/tech-icons/js.png" },
-        { name: "Dart", icon: "/tech-icons/dart.png" },
-        { name: "SQL", icon: "/tech-icons/sql.png" },
-        { name: "TypeScript", icon: "/tech-icons/typescript.png" },
+        { name: "Java", icon: javaIcon },
+        { name: "JavaScript", icon: jsIcon },
+        { name: "Dart", icon: dartIcon },
+        { name: "SQL", icon: sqlIcon },
+        { name: "TypeScript", icon: typescriptIcon },
       ],
     },
     {
       id: "frameworks",
       name: "Frameworks & Tools",
       skills: [
-        { name: "Angular", icon: "/tech-icons/angular.png" },
-        { name: "Spring Boot", icon: "/tech-icons/spring-boot.png" },
-        { name: "Hibernate", icon: "/tech-icons/hibernate.png" },
-        { name: "JavaFX", icon: "/tech-icons/javafx.png" },
-        { name: "Flutter", icon: "/tech-icons/flutter.png" },
+        { name: "Angular", icon: angularIcon },
+        { name: "Spring Boot", icon: springBootIcon },
+        { name: "Hibernate", icon: hibernateIcon },
+        { name: "JavaFX", icon: javaFXIcon },
+        { name: "Flutter", icon: flutterIcon },
       ],
     },
     {
       id: "databases",
       name: "Database Management",
       skills: [
-        { name: "MySQL", icon: "/tech-icons/mysql.png" },
-        { name: "PostgreSQL", icon: "/tech-icons/postgres.png" },
-        { name: "MongoDB", icon: "/tech-icons/mongodb.png" },
+        { name: "MySQL", icon: mysqlIcon },
+        { name: "PostgreSQL", icon: postgresql },
+        { name: "MongoDB", icon: mongoDb },
       ],
     },
     {
       id: "ui",
       name: "UI/UX Tools",
       skills: [
-        { name: "Figma", icon: "/tech-icons/figma.png" },
-        { name: "Bootstrap", icon: "/tech-icons/bootstrap.png" },
-        { name: "CSS", icon: "/tech-icons/css.png" },
+        { name: "Figma", icon: figmaIcon },
+        { name: "Bootstrap", icon: bootstrapIcon },
+        { name: "CSS", icon: cssIcon },
       ],
     },
     {
       id: "testing",
       name: "APIs & Testing",
-      skills: [{ name: "Postman", icon: "/tech-icons/postman.png" }],
+      skills: [{ name: "Postman", icon: postmanIcon }],
     },
   ]
 
