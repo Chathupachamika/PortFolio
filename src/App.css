@@ -35,6 +35,15 @@
 
 .card {
   padding: 2em;
+  background-color: #f9f9f9; /* Added background color */
+  border: 1px solid #ddd; /* Added border */
+  border-radius: 8px; /* Added rounded corners */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Added hover transition */
+}
+
+.card:hover {
+  transform: translateY(-5px); /* Added hover effect */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added shadow on hover */
 }
 
 .read-the-docs {

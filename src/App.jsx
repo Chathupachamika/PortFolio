@@ -1,31 +1,24 @@
-import React from 'react'
-import Header from './components/Header/Header';
-import About from './components/About/About';
-import Contact from './components/Contact/Contact';
-import Project from './components/Project/Project';
-import Education from './components/Education/Education';
-import TechStack from './components/TechStack/TechStack';
-import Background from './components/Background';
-import Footer from './components/Footer/Footer';
+import Hero from "./components/hero.jsx"
+import About from "./components/about.jsx"
+import Education from "./components/education.jsx"
+import TechStack from "./components/tech-stack.jsx"
+import Projects from "./components/projects.jsx"
+import Contact from "./components/contact.jsx"
+import Footer from "./components/footer.jsx"
 
-export default function App() {
+function App() {
   return (
-    <>
-      <div className="relative mt-16">
-      <Background /> { }
-      </div>
-      <main className='flex flex-col items-center px-4 md:px-8 lg:px-16 mt-16'>
-        
-        <Header />
-        <About />
-        <Education />
-       
-        <TechStack />
-        <Project />
-        <Contact />
-      </main>
+    <main className="min-h-screen">
+      <Hero />
+      <About />
+      <Education />
+      <TechStack />
+      <Projects />
+      <Contact />
       <Footer />
-    </>
+    </main>
   )
 }
+
+export default App
 
