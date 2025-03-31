@@ -4,19 +4,29 @@ import { useState } from "react"
 import { motion } from "framer-motion"
 import { Card, CardContent, CardFooter } from "./ui/card"
 import { Badge } from "./ui/badge"
+import wecare from '../assets/images/wecare.png';
+import zony from '../assets/images/zony.jpeg';
+import userform from '../assets/images/userform.jpg';
+import country from '../assets/images/country.jpg';
+import burgers from '../assets/images/burgers.jpg';
+import todo from '../assets/images/todo.jpg';
+import weather from '../assets/images/weather.jpg';
+import clothify from '../assets/images/clothify.jpg';
+import defense from '../assets/images/defense.jpg';
 import { Button } from "./ui/button"
 import { ExternalLink, Github } from "lucide-react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs"
 
 export default function Projects() {
   const [hoveredIndex, setHoveredIndex] = useState(null)
+  const [showAll, setShowAll] = useState(false) // State to toggle project visibility
 
   const projects = [
     {
       title: "ZONY Campus Smart LMS",
       description:
         "A comprehensive campus management web application with intuitive interfaces and robust Java Spring Boot backend for streamlined educational and administrative workflows.",
-      image: "/project-images/zony.jpeg",
+      image: zony,
       link: "https://github.com/Chathupachamika/ZONY-Campus",
       technologies: ["Angular", "Java", "Spring Boot", "MySQL", "Rest API", "AI bot Gemini"],
       category: "fullstack",
@@ -24,7 +34,7 @@ export default function Projects() {
     {
       title: "Clothify Store",
       description: "E-commerce platform built with modern technologies for seamless shopping experience.",
-      image: "/project-images/clothify.jpg",
+      image: clothify,
       link: "https://github.com/Chathupachamika/Clothify_Store-app",
       technologies: ["JavaFX", "Java"],
       category: "desktop",
@@ -33,7 +43,7 @@ export default function Projects() {
       title: "Weather Application",
       description:
         "Real-time weather application that allows users to view current weather conditions and forecasts for their location.",
-      image: "/project-images/weather.jpg",
+      image: weather,
       link: "https://chathupachamika.github.io/Weather_site/",
       technologies: ["HTML", "CSS", "JavaScript", "API Handling"],
       category: "frontend",
@@ -42,7 +52,7 @@ export default function Projects() {
       title: "Defense System",
       description:
         "A strategic simulation application featuring components like submarines, tanks, and helicopters to model defense systems.",
-      image: "/project-images/defense.jpg",
+      image: defense,
       link: "https://github.com/Chathupachamika/Defense_System",
       technologies: ["Java", "Observer Pattern"],
       category: "desktop",
@@ -50,7 +60,7 @@ export default function Projects() {
     {
       title: "Mahii's Tasks To Do",
       description: "A JavaFX-based project showcasing GUI design and efficient task management.",
-      image: "/project-images/todo.jpg",
+      image: todo,
       link: "https://github.com/Chathupachamika/Mahii-s_tasks_javaFx",
       technologies: ["JavaFX", "Java"],
       category: "desktop",
@@ -59,7 +69,7 @@ export default function Projects() {
       title: "User Form Application",
       description:
         "A MERN stack user form is a full-stack application built with MongoDB, Express, React, and Node.js, enabling seamless user input, data storage, and dynamic UI updates.",
-      image: "/project-images/userform.jpg",
+      image: userform,
       link: "https://github.com/Chathupachamika/User_Form-crud--MERN-Stack",
       technologies: ["React", "Node JS", "MongoDB", "Express JS"],
       category: "fullstack",
@@ -68,7 +78,7 @@ export default function Projects() {
       title: "Country Information Site",
       description:
         "A web application displaying country-specific data such as population, language, and geography with a clean and responsive design.",
-      image: "/project-images/country.jpg",
+      image: country,
       link: "https://github.com/Chathupachamika/Country_Information_Site",
       technologies: ["HTML", "CSS", "JavaScript"],
       category: "frontend",
@@ -77,7 +87,7 @@ export default function Projects() {
       title: "WeCare Prescription Management System",
       description:
         "An innovative solution designed to streamline prescription processes, improve accuracy, and enhance healthcare delivery with robust security and advanced features.",
-      image: "/project-images/wecare.png",
+      image: wecare,
       link: "https://github.com/iCET-110/Hospital-Management-Frontend",
       technologies: ["Spring Boot", "Microservices", "Maven", "MySQL", "Angular", "TypeScript"],
       category: "fullstack",
@@ -86,7 +96,7 @@ export default function Projects() {
       title: "MOS Burgers",
       description:
         "A standalone application featuring an intuitive user interface for efficient restaurant management.",
-      image: "/project-images/burgers.jpg",
+      image: burgers,
       link: "https://chathupachamika.github.io/MOS_Burgers_project/",
       technologies: ["HTML", "CSS", "JavaScript", "RestAPI"],
       category: "frontend",
@@ -135,6 +145,7 @@ export default function Projects() {
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {projects
                   .filter((project) => category.id === "all" || project.category === category.id)
+                  .slice(0, showAll ? projects.length : 6) // Show only 6 projects initially
                   .map((project, index) => (
                     <motion.div
                       key={index}
@@ -192,6 +203,13 @@ export default function Projects() {
                     </motion.div>
                   ))}
               </div>
+              {projects.filter((project) => category.id === "all" || project.category === category.id).length > 6 && (
+                <div className="flex justify-center mt-6">
+                  <Button onClick={() => setShowAll(!showAll)} variant="default">
+                    {showAll ? "Show Less" : "Show More"}
+                  </Button>
+                </div>
+              )}
             </TabsContent>
           ))}
         </Tabs>
