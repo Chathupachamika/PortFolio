@@ -29,7 +29,7 @@ export default function Contact() {
     setIsSubmitting(true)
 
     try {
-      // Create form data for web3forms
+      
       const data = new FormData()
       data.append("access_key", "3aa15a33-2b36-4eb9-9859-b55b7a6d76d2")
       data.append("name", formData.name)
