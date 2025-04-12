@@ -48,7 +48,7 @@ export default function Contact() {
           variant: "default",
         })
 
-        // Reset form
+       
         setFormData({
           name: "",
           email: "",
