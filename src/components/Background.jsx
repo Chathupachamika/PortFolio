@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef } from "react"
-// ...existing imports...
+
 
 export default function Background({ children }) { // Renamed from RootLayout to Background
   const canvasRef = useRef(null)
