@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react"
 
-
 export default function Background({ children }) { 
   const canvasRef = useRef(null)
 
