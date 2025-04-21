@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react"
 
 
-export default function Background({ children }) { // Renamed from RootLayout to Background
+export default function Background({ children }) { 
   const canvasRef = useRef(null)
 
   useEffect(() => {
