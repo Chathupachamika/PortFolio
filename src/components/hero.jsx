@@ -18,7 +18,6 @@ export default function Hero() {
     animate: { x: 0, opacity: 1 },
     transition: { duration: 0.8, delay: 0.2 }
   };
-
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Elements */}
