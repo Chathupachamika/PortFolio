@@ -13,7 +13,6 @@ export default function Hero() {
     animate: { opacity: 1, y: 0 },
     transition: { duration: 0.8 }
   };
-
   const slideIn = {
     initial: { x: 100, opacity: 0 },
     animate: { x: 0, opacity: 1 },
