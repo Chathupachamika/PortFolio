@@ -7,7 +7,6 @@ import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Progress } from "@/components/ui/progress" // Corrected import path
 import { cn } from "@/lib/utils"
-
 import javaIcon from "../assets/Tech_Icon/java.png"
 import jsIcon from "../assets/Tech_Icon/js.png"
 import dartIcon from "../assets/Tech_Icon/dart.png"
