@@ -6,7 +6,6 @@ import { Button } from "./ui/button"
 import { Download } from "lucide-react"
 import myImage from "../assets/images/headshotchathupa.png"
 import { cn } from "../lib/utils"
-
 export default function Hero() {
   const fadeIn = {
     initial: { opacity: 0, y: 20 },
