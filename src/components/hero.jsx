@@ -82,7 +82,6 @@ export default function Hero() {
           >
             Passionate about creating innovative solutions with expertise in Java, Spring Boot, Angular, and modern web technologies.
           </motion.p>
-
           <motion.div 
             className="flex flex-wrap gap-4 justify-center md:justify-start"
             initial={{ opacity: 0, y: 20 }}
