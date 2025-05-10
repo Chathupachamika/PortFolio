@@ -9,7 +9,6 @@ import { Button } from "./ui/button"
 import { Badge } from "./ui/badge"
 import { useToast } from "./ui/use-toast"
 import { Mail, MapPin, Phone } from "lucide-react"
-
 export default function Contact() {
   const { toast } = useToast()
   const [isSubmitting, setIsSubmitting] = useState(false)
