@@ -15,16 +15,20 @@ export function ThemeProvider({ children, defaultTheme = "system", storageKey = 
   useEffect(() => {
     const root = window.document.documentElement
 
+    // Remove old classes
     root.classList.remove("light", "dark")
 
     if (theme === "system") {
       const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
-
       root.classList.add(systemTheme)
+      // Enhance native browser element theming (scrollbars, inputs)
+      root.style.colorScheme = systemTheme 
       return
     }
 
     root.classList.add(theme)
+    // Enhance native browser element theming (scrollbars, inputs)
+    root.style.colorScheme = theme 
   }, [theme])
 
   const value = {
@@ -49,4 +53,3 @@ export const useTheme = () => {
 
   return context
 }
-

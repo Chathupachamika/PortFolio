@@ -55,7 +55,7 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: 'Inter', sans-serif; /* Added fallback font-family */
+    font-family: 'Inter', sans-serif;
   }
 }
 
@@ -63,7 +63,7 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar for desktop */
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -81,3 +81,13 @@ html {
   background: hsl(var(--muted-foreground));
 }
 
+/* Utility to hide scrollbars on mobile swipable elements */
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
+}

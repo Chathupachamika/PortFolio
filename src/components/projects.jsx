@@ -2,8 +2,13 @@
 
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { Card, CardContent, CardFooter } from "./ui/card"
+import { Card, CardContent, CardFooter, CardHeader } from "./ui/card"
 import { Badge } from "./ui/badge"
+import { Button } from "./ui/button"
+import { ExternalLink, Github } from "lucide-react"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs"
+
+// Images
 import wecare from '../assets/images/wecare.png';
 import zony from '../assets/images/zony.jpeg';
 import userform from '../assets/images/userform.jpg';
@@ -13,13 +18,9 @@ import todo from '../assets/images/todo.jpg';
 import weather from '../assets/images/weather.jpg';
 import clothify from '../assets/images/clothify.jpg';
 import defense from '../assets/images/defense.jpg';
-import { Button } from "./ui/button"
-import { ExternalLink, Github } from "lucide-react"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs"
 
 export default function Projects() {
-  const [hoveredIndex, setHoveredIndex] = useState(null)
-  const [showAll, setShowAll] = useState(false) // State to toggle project visibility
+  const [showAll, setShowAll] = useState(false)
 
   const projects = [
     {
@@ -84,12 +85,12 @@ export default function Projects() {
       category: "frontend",
     },
     {
-      title: "WeCare Prescription Management System",
+      title: "WeCare Prescription Management",
       description:
-        "An innovative solution designed to streamline prescription processes, improve accuracy, and enhance healthcare delivery with robust security and advanced features.",
+        "An innovative solution designed to streamline prescription processes, improve accuracy, and enhance healthcare delivery with robust security.",
       image: wecare,
       link: "https://github.com/iCET-110/Hospital-Management-Frontend",
-      technologies: ["Spring Boot", "Microservices", "Maven", "MySQL", "Angular", "TypeScript"],
+      technologies: ["Spring Boot", "Microservices", "MySQL", "Angular", "TypeScript"],
       category: "fullstack",
     },
     {
@@ -111,8 +112,10 @@ export default function Projects() {
   ]
 
   return (
-    <section id="project" className="py-20 bg-gradient-to-b from-background/80 to-background">
-      <div className="container px-4 md:px-6">
+    <section id="project" className="py-20 bg-gradient-to-b from-background/80 to-background overflow-hidden">
+      <div className="container px-4 md:px-6 mx-auto max-w-7xl">
+        
+        {/* Header Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -120,95 +123,130 @@ export default function Projects() {
           viewport={{ once: true }}
           className="flex flex-col items-center text-center mb-12"
         >
-          <Badge variant="outline" className="mb-4 px-4 py-1 text-sm border-primary/20">
+          <Badge variant="outline" className="mb-4 px-4 py-1 text-sm border-primary/20 bg-background/50 backdrop-blur-sm">
             My Work
           </Badge>
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Featured Projects</h2>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">
+            Featured Projects
+          </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full mb-8" />
-          <p className="text-muted-foreground max-w-2xl">
-            Here are some of the projects I've worked on. Each project represents different skills and technologies I've
-            mastered.
+          <p className="text-muted-foreground max-w-2xl px-4">
+            Here are some of the projects I've worked on. Each represents a unique challenge and demonstrates different technologies I've mastered.
           </p>
         </motion.div>
 
-        <Tabs defaultValue="all" className="w-full max-w-6xl mx-auto">
-          <TabsList className="grid grid-cols-2 md:grid-cols-4 mb-8">
-            {categories.map((category) => (
-              <TabsTrigger key={category.id} value={category.id}>
-                {category.name}
-              </TabsTrigger>
-            ))}
-          </TabsList>
+        {/* Projects Tabs */}
+        <Tabs defaultValue="all" className="w-full">
+          
+          {/* Scrollable Tab List for Mobile */}
+          <div className="w-full overflow-x-auto pb-4 mb-6 md:mb-8 scrollbar-hide [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+            <TabsList className="inline-flex min-w-full sm:min-w-0 sm:flex sm:justify-center h-auto p-1 bg-muted/50">
+              {categories.map((category) => (
+                <TabsTrigger 
+                  key={category.id} 
+                  value={category.id}
+                  className="px-6 py-2.5 rounded-md whitespace-nowrap data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm transition-all"
+                >
+                  {category.name}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </div>
 
+          {/* Tab Content */}
           {categories.map((category) => (
-            <TabsContent key={category.id} value={category.id} className="mt-4">
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <TabsContent key={category.id} value={category.id} className="mt-0 focus-visible:outline-none focus-visible:ring-0">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                 {projects
                   .filter((project) => category.id === "all" || project.category === category.id)
-                  .slice(0, showAll ? projects.length : 6) // Show only 6 projects initially
+                  .slice(0, showAll ? projects.length : 6)
                   .map((project, index) => (
                     <motion.div
-                      key={index}
+                      key={`${category.id}-${index}`}
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.5, delay: index * 0.1 }}
                       viewport={{ once: true }}
-                      onMouseEnter={() => setHoveredIndex(index)}
-                      onMouseLeave={() => setHoveredIndex(null)}
-                      className="relative group"
+                      className="group flex h-full"
                     >
-                      <Card className="h-full overflow-hidden bg-card/50 backdrop-blur-sm border-primary/10">
-                        <div className="relative h-48 overflow-hidden">
+                      <Card className="flex flex-col h-full w-full overflow-hidden bg-card/40 backdrop-blur-sm border-border/50 hover:border-primary/30 transition-all duration-300 hover:shadow-lg hover:shadow-primary/5">
+                        
+                        {/* Image Container */}
+                        <div className="relative h-48 sm:h-52 w-full overflow-hidden border-b border-border/50 bg-muted">
                           <img
                             src={project.image || "/placeholder.svg"}
                             alt={project.title}
-                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-start p-4">
-                            <div className="flex gap-2">
-                              <Button asChild size="sm" variant="default" className="gap-1">
-                                <a href={project.link} target="_blank" rel="noopener noreferrer">
-                                  <Github className="h-4 w-4" />
-                                  Code
-                                </a>
-                              </Button>
-                              {project.category === "frontend" && (
-                                <Button asChild size="sm" variant="secondary" className="gap-1">
-                                  <a href={project.link} target="_blank" rel="noopener noreferrer">
-                                    <ExternalLink className="h-4 w-4" />
-                                    Demo
-                                  </a>
-                                </Button>
-                              )}
-                            </div>
-                          </div>
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                         </div>
-                        <CardContent className="p-4">
-                          <h3 className="text-lg font-semibold mb-2">{project.title}</h3>
-                          <p className="text-sm text-muted-foreground mb-4 line-clamp-3">{project.description}</p>
+
+                        {/* Card Content */}
+                        <CardHeader className="p-5 pb-0 flex-none">
+                          <h3 className="text-xl font-bold tracking-tight line-clamp-1 group-hover:text-primary transition-colors duration-300">
+                            {project.title}
+                          </h3>
+                        </CardHeader>
+                        
+                        <CardContent className="p-5 pt-3 flex-grow">
+                          <p className="text-sm text-muted-foreground line-clamp-3 mb-6">
+                            {project.description}
+                          </p>
+                          
+                          {/* Tech Stack Badges */}
+                          <div className="flex flex-wrap gap-1.5">
+                            {project.technologies.slice(0, 4).map((tech, idx) => (
+                              <Badge key={idx} variant="secondary" className="px-2 py-0.5 text-[10px] font-medium bg-secondary/50 text-secondary-foreground">
+                                {tech}
+                              </Badge>
+                            ))}
+                            {project.technologies.length > 4 && (
+                              <Badge variant="outline" className="px-2 py-0.5 text-[10px] font-medium border-border/50">
+                                +{project.technologies.length - 4}
+                              </Badge>
+                            )}
+                          </div>
                         </CardContent>
-                        <CardFooter className="p-4 pt-0 flex flex-wrap gap-2">
-                          {project.technologies.slice(0, 3).map((tech, idx) => (
-                            <Badge key={idx} variant="secondary" className="text-xs">
-                              {tech}
-                            </Badge>
-                          ))}
-                          {project.technologies.length > 3 && (
-                            <Badge variant="outline" className="text-xs">
-                              +{project.technologies.length - 3} more
-                            </Badge>
+
+                        {/* Action Buttons (Always visible for touch access) */}
+                        <CardFooter className="p-5 pt-0 mt-auto border-t border-border/10 flex flex-wrap gap-3">
+                          <Button asChild size="sm" className="flex-1 min-w-[100px] gap-2 bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground transition-all">
+                            <a href={project.link} target="_blank" rel="noopener noreferrer">
+                              <Github className="h-4 w-4" />
+                              Code
+                            </a>
+                          </Button>
+                          
+                          {project.category === "frontend" && (
+                            <Button asChild size="sm" variant="default" className="flex-1 min-w-[100px] gap-2 shadow-sm">
+                              <a href={project.link} target="_blank" rel="noopener noreferrer">
+                                <ExternalLink className="h-4 w-4" />
+                                Demo
+                              </a>
+                            </Button>
                           )}
                         </CardFooter>
                       </Card>
                     </motion.div>
                   ))}
               </div>
+              
+              {/* Show More/Less Button */}
               {projects.filter((project) => category.id === "all" || project.category === category.id).length > 6 && (
-                <div className="flex justify-center mt-6">
-                  <Button onClick={() => setShowAll(!showAll)} variant="default">
-                    {showAll ? "Show Less" : "Show More"}
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  className="flex justify-center mt-10"
+                >
+                  <Button 
+                    onClick={() => setShowAll(!showAll)} 
+                    variant="outline" 
+                    size="lg"
+                    className="min-w-[160px] border-primary/20 hover:bg-primary/5"
+                  >
+                    {showAll ? "Show Less Projects" : "View All Projects"}
                   </Button>
-                </div>
+                </motion.div>
               )}
             </TabsContent>
           ))}
@@ -217,4 +255,3 @@ export default function Projects() {
     </section>
   )
 }
-

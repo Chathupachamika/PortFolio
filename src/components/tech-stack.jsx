@@ -5,7 +5,7 @@ import { motion, useMotionValue, useSpring } from "framer-motion"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Progress } from "@/components/ui/progress" // Corrected import path
+import { Progress } from "@/components/ui/progress"
 import { cn } from "@/lib/utils"
 import javaIcon from "../assets/Tech_Icon/java.png"
 import jsIcon from "../assets/Tech_Icon/js.png"
@@ -75,11 +75,11 @@ function SkillCard({ skill, index, proficiency = 85 }) {
       ref={cardRef}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
+      transition={{ duration: 0.5, delay: index * 0.05 }} // Sped up the stagger slightly for mobile
       viewport={{ once: true }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="flex flex-col items-center"
+      className="flex flex-col items-center w-full"
     >
       <motion.div
         style={{
@@ -90,11 +90,11 @@ function SkillCard({ skill, index, proficiency = 85 }) {
             : "none",
           transformStyle: "preserve-3d",
         }}
-        whileHover={{ scale: 1.05 }}
-        className="w-full aspect-square max-w-[120px] rounded-xl bg-card border border-border/50 p-4 flex flex-col items-center justify-center gap-3 transition-all duration-300 relative overflow-hidden group"
+        whileHover={{ scale: isMobile ? 1 : 1.05 }}
+        className="w-full aspect-square max-w-[120px] rounded-xl bg-card border border-border/50 p-3 sm:p-4 flex flex-col items-center justify-center gap-2 sm:gap-3 transition-all duration-300 relative overflow-hidden group"
       >
-        {/* Background glow effect */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        {/* Background glow effect - Only visible on desktop hover */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 hidden md:block" />
 
         {/* Icon with floating animation */}
         <motion.div
@@ -105,7 +105,7 @@ function SkillCard({ skill, index, proficiency = 85 }) {
             ease: "easeInOut",
             delay: index * 0.2,
           }}
-          className="relative w-12 h-12 flex items-center justify-center"
+          className="relative w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center"
         >
           <img
             src={skill.icon || "/placeholder.svg"}
@@ -115,11 +115,11 @@ function SkillCard({ skill, index, proficiency = 85 }) {
         </motion.div>
 
         {/* Skill name */}
-        <span className="text-sm font-medium text-center">{skill.name}</span>
+        <span className="text-xs sm:text-sm font-medium text-center truncate w-full px-1">{skill.name}</span>
 
-        {/* Proficiency indicator that appears on hover */}
-        <div className="absolute bottom-0 left-0 w-full h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <Progress value={proficiency} className="h-1 rounded-none" />
+        {/* Proficiency indicator - ALWAYS visible on mobile, hover on desktop */}
+        <div className="absolute bottom-0 left-0 w-full h-1 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
+          <Progress value={proficiency} className="h-1 rounded-none bg-muted-foreground/20" />
         </div>
       </motion.div>
     </motion.div>
@@ -132,7 +132,7 @@ function AnimatedTabTrigger({ value, activeTab, children }) {
     <TabsTrigger
       value={value}
       className={cn(
-        "relative overflow-hidden text-xs md:text-sm py-2 px-3 transition-all duration-300",
+        "relative overflow-hidden text-sm py-3 px-4 md:py-2 md:px-3 transition-all duration-300 whitespace-nowrap shrink-0",
         activeTab === value ? "text-primary font-medium" : "text-muted-foreground",
       )}
     >
@@ -154,22 +154,10 @@ export default function TechStack() {
   const [activeTab, setActiveTab] = useState("languages")
 
   const proficiencies = {
-    Java: 90,
-    JavaScript: 85,
-    TypeScript: 80,
-    Dart: 75,
-    SQL: 85,
-    Angular: 80,
-    "Spring Boot": 85,
-    Hibernate: 80,
-    JavaFX: 75,
-    Flutter: 70,
-    MySQL: 85,
-    PostgreSQL: 80,
-    MongoDB: 75,
-    Figma: 70,
-    Bootstrap: 85,
-    CSS: 80,
+    Java: 90, JavaScript: 85, TypeScript: 80, Dart: 75, SQL: 85,
+    Angular: 80, "Spring Boot": 85, Hibernate: 80, JavaFX: 75, Flutter: 70,
+    MySQL: 85, PostgreSQL: 80, MongoDB: 75,
+    Figma: 70, Bootstrap: 85, CSS: 80,
     Postman: 90,
   }
 
@@ -227,11 +215,11 @@ export default function TechStack() {
   ]
 
   return (
-    <section id="tech" className="py-20 relative overflow-hidden">
+    <section id="tech" className="py-16 md:py-20 relative overflow-hidden">
       {/* Animated background elements */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-20 left-10 w-64 h-64 rounded-full bg-primary/5 blur-3xl" />
-        <div className="absolute bottom-10 right-10 w-80 h-80 rounded-full bg-secondary/5 blur-3xl" />
+      <div className="absolute inset-0 -z-10 pointer-events-none">
+        <div className="absolute top-20 left-10 w-48 md:w-64 h-48 md:h-64 rounded-full bg-primary/5 blur-3xl" />
+        <div className="absolute bottom-10 right-10 w-64 md:w-80 h-64 md:h-80 rounded-full bg-secondary/5 blur-3xl" />
       </div>
 
       <div className="container px-4 md:px-6 relative">
@@ -240,7 +228,7 @@ export default function TechStack() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="flex flex-col items-center text-center mb-12"
+          className="flex flex-col items-center text-center mb-10 md:mb-12"
         >
           <Badge
             variant="outline"
@@ -261,23 +249,26 @@ export default function TechStack() {
           </h2>
 
           <motion.div
-            className="w-20 h-1 bg-gradient-to-r from-primary to-primary/50 rounded-full mb-8"
+            className="w-20 h-1 bg-gradient-to-r from-primary to-primary/50 rounded-full mb-6 md:mb-8"
             animate={{ width: ["0%", "100%", "20%"] }}
             transition={{ duration: 2, times: [0, 0.7, 1] }}
           />
 
-          <p className="text-muted-foreground max-w-2xl">
-            I work with a variety of technologies to create robust and scalable applications. Hover over each skill to
-            see my proficiency level.
+          <p className="text-muted-foreground max-w-2xl text-sm md:text-base px-4">
+            I work with a variety of technologies to create robust and scalable applications.
           </p>
         </motion.div>
 
         <Tabs defaultValue="languages" className="w-full max-w-4xl mx-auto" onValueChange={setActiveTab}>
-          <div className="relative">
-            <TabsList className="grid grid-cols-2 md:grid-cols-5 mb-8 bg-background/50 backdrop-blur-sm border border-border/50 p-1 rounded-xl">
+          {/* Mobile Fix: Scrollable Horizontal Flex Container 
+            We use utility classes to hide the ugly scrollbar while keeping it functional.
+          */}
+          <div className="relative w-full overflow-hidden mb-6 md:mb-8">
+            <TabsList className="flex md:grid md:grid-cols-5 bg-background/50 backdrop-blur-sm border border-border/50 p-1 rounded-xl w-full overflow-x-auto justify-start md:justify-center [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
               {categories.map((category) => (
                 <AnimatedTabTrigger key={category.id} value={category.id} activeTab={activeTab}>
-                  <span className="mr-1.5">{category.icon}</span> {category.name}
+                  <span className="mr-1.5 md:mr-2 text-lg md:text-base">{category.icon}</span> 
+                  {category.name}
                 </AnimatedTabTrigger>
               ))}
             </TabsList>
@@ -287,7 +278,7 @@ export default function TechStack() {
             <TabsContent
               key={category.id}
               value={category.id}
-              className="mt-4 focus-visible:outline-none focus-visible:ring-0"
+              className="mt-0 focus-visible:outline-none focus-visible:ring-0"
             >
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
@@ -295,11 +286,11 @@ export default function TechStack() {
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.3 }}
               >
-                <Card className="bg-card/30 backdrop-blur-md border-primary/10 overflow-hidden">
-                  <CardContent className="p-6 md:p-8">
+                <Card className="bg-card/30 backdrop-blur-md border-primary/10 overflow-hidden shadow-sm">
+                  <CardContent className="p-4 sm:p-6 md:p-8">
                     <div className="flex items-center justify-between mb-6">
-                      <h3 className="text-xl font-semibold flex items-center gap-2">
-                        <span className="text-2xl">{category.icon}</span>
+                      <h3 className="text-lg md:text-xl font-semibold flex items-center gap-2">
+                        <span className="text-xl md:text-2xl">{category.icon}</span>
                         <span>{category.name}</span>
                       </h3>
 
@@ -308,7 +299,7 @@ export default function TechStack() {
                       </Badge>
                     </div>
 
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 md:gap-6">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 md:gap-6 justify-items-center">
                       {category.skills.map((skill, index) => (
                         <SkillCard
                           key={skill.name}
@@ -325,7 +316,7 @@ export default function TechStack() {
           ))}
         </Tabs>
 
-        {/* Legend for proficiency */}
+        {/* Legend for proficiency - Responsive text */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -333,12 +324,12 @@ export default function TechStack() {
           viewport={{ once: true }}
           className="mt-8 flex justify-center"
         >
-          <div className="bg-card/30 backdrop-blur-sm border border-border/50 rounded-lg px-4 py-2 text-xs text-muted-foreground flex items-center gap-2">
-            <span>💡 Tip: Hover over skills to see proficiency level</span>
+          <div className="bg-card/30 backdrop-blur-sm border border-border/50 rounded-lg px-4 py-2 text-xs text-muted-foreground flex items-center gap-2 text-center max-w-[90%]">
+            <span className="hidden md:inline">💡 Tip: Hover over skills to see proficiency level</span>
+            <span className="inline md:hidden">💡 Tip: Bottom bars indicate my proficiency level</span>
           </div>
         </motion.div>
       </div>
     </section>
   )
-}
-
+}  

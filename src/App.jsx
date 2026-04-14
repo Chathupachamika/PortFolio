@@ -8,21 +8,26 @@ import Footer from "./components/footer.jsx"
 import Background from "./components/Background"
 import Header from "./components/header.jsx"
 
+// If you completely deleted App.css, you don't need to import it here.
+import "./App.css" 
+
 function App() {
   return (
-    <main className="min-h-screen">
+    // Added overflow-x-hidden to prevent mobile horizontal scrolling
+    <main className="min-h-screen relative overflow-x-hidden flex flex-col">
       <Background />
       <Header />
-      <Hero />
-      <About />
-      <Education />
-      <TechStack />
-      <Projects />
-      <Contact />
+      <div className="flex-grow">
+        <Hero />
+        <About />
+        <Education />
+        <TechStack />
+        <Projects />
+        <Contact />
+      </div>
       <Footer />
     </main>
   )
 }
 
 export default App
-

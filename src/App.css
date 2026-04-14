@@ -1,51 +1,15 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
+/* Removed the default Vite #root styles (padding: 2rem, text-align: center) 
+  which were squishing the mobile layout. Let Tailwind handle the layout! 
+*/
 
 .card {
-  padding: 2em;
-  background-color: #f9f9f9; /* Added background color */
-  border: 1px solid #ddd; /* Added border */
-  border-radius: 8px; /* Added rounded corners */
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Added hover transition */
+  background-color: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card:hover {
-  transform: translateY(-5px); /* Added hover effect */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added shadow on hover */
-}
-
-.read-the-docs {
-  color: #888;
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px -10px rgba(0, 0, 0, 0.5);
 }
