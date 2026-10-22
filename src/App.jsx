@@ -78,6 +78,15 @@ function App() {
   const visibleProjects = useMemo(() => filter === "ALL" ? projects : projects.filter((p) => p.type.includes(filter)), [filter])
 
   useEffect(() => { const key = (e) => { if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") { e.preventDefault(); setPaletteOpen(true) } if (e.key === "Escape") { setPaletteOpen(false); setTerminalOpen(false) } }; window.addEventListener("keydown", key); return () => window.removeEventListener("keydown", key) }, [])
+  useEffect(() => {
+    const shell = document.querySelector(".portfolio-shell")
+    const movePointer = (event) => {
+      shell?.style.setProperty("--pointer-x", `${event.clientX}px`)
+      shell?.style.setProperty("--pointer-y", `${event.clientY}px`)
+    }
+    window.addEventListener("pointermove", movePointer, { passive: true })
+    return () => window.removeEventListener("pointermove", movePointer)
+  }, [])
   const go = (id) => { document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }); setMenuOpen(false); setPaletteOpen(false) }
   const runCommand = (e) => { if (e.key !== "Enter") return; const value = command.trim().toLowerCase(); const responses = { help: "commands: about · skills · projects · experience · education · contact · github · linkedin · clear", about: `${portfolioConfig.name} — ${portfolioConfig.title}.`, skills: portfolioConfig.skills.frontend.concat(portfolioConfig.skills.backend).join(" · "), projects: "6 verified builds loaded. navigate to /projects to inspect.", experience: "RedCode Solution · Software Engineering Trainee · January 2025 – August 2025.", education: "University of Sri Jayewardenepura · second-year undergraduate.", contact: `email ${portfolioConfig.email}`, github: portfolioConfig.github, linkedin: portfolioConfig.linkedin }; setOutput((current) => value === "clear" ? [] : [...current, `> ${value}`, responses[value] || "command not found — try 'help'"]); setCommand("") }
   const [contactForm, setContactForm] = useState({ name: "", email: "", message: "" })
