@@ -66,6 +66,110 @@ function EnergyField() {
   return <canvas ref={ref} className="energy-canvas" aria-hidden="true" />
 }
 
+function CursorPowerTrail() {
+  const ref = useRef(null)
+
+  useEffect(() => {
+    const canvas = ref.current
+    const context = canvas?.getContext("2d")
+    const finePointer = window.matchMedia("(pointer: fine)")
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)")
+    if (!canvas || !context || !finePointer.matches || reducedMotion.matches) return undefined
+
+    const pointer = { x: -100, y: -100, tx: -100, ty: -100, px: -100, py: -100, speed: 0, active: false }
+    const trail = []
+    const particles = []
+    const bursts = []
+    let frameId = 0
+    let lastTime = performance.now()
+
+    const resize = () => {
+      const ratio = Math.min(window.devicePixelRatio || 1, 2)
+      canvas.width = Math.floor(window.innerWidth * ratio)
+      canvas.height = Math.floor(window.innerHeight * ratio)
+      canvas.style.width = `${window.innerWidth}px`
+      canvas.style.height = `${window.innerHeight}px`
+      context.setTransform(ratio, 0, 0, ratio, 0, 0)
+    }
+    const move = (event) => {
+      pointer.tx = event.clientX
+      pointer.ty = event.clientY
+      pointer.active = true
+    }
+    const click = () => {
+      if (!pointer.active) return
+      bursts.push({ x: pointer.x, y: pointer.y, age: 0 })
+      for (let i = 0; i < 12; i += 1) {
+        const angle = Math.random() * Math.PI * 2
+        const force = 1.2 + Math.random() * 2.6
+        particles.push({ x: pointer.x, y: pointer.y, vx: Math.cos(angle) * force, vy: Math.sin(angle) * force, life: 1, size: 1 + Math.random() * 2 })
+      }
+    }
+    const emit = (amount) => {
+      for (let i = 0; i < amount; i += 1) {
+        const angle = Math.random() * Math.PI * 2
+        particles.push({ x: pointer.x + (Math.random() - .5) * 12, y: pointer.y + (Math.random() - .5) * 12, vx: Math.cos(angle) * (Math.random() * 1.4), vy: Math.sin(angle) * (Math.random() * 1.4), life: .65 + Math.random() * .35, size: .7 + Math.random() * 1.7 })
+      }
+    }
+    const drawPath = (points, width, alpha, color) => {
+      if (points.length < 2) return
+      context.beginPath()
+      context.moveTo(points[0].x, points[0].y)
+      for (let i = 1; i < points.length - 1; i += 1) {
+        const next = points[i + 1]
+        context.quadraticCurveTo(points[i].x, points[i].y, (points[i].x + next.x) / 2, (points[i].y + next.y) / 2)
+      }
+      context.lineTo(points[points.length - 1].x, points[points.length - 1].y)
+      context.strokeStyle = color
+      context.lineWidth = width
+      context.lineCap = "round"
+      context.stroke()
+    }
+    const render = (now) => {
+      const delta = Math.min((now - lastTime) / 16.67, 2)
+      lastTime = now
+      frameId = requestAnimationFrame(render)
+      context.clearRect(0, 0, window.innerWidth, window.innerHeight)
+      pointer.x += (pointer.tx - pointer.x) * .24
+      pointer.y += (pointer.ty - pointer.y) * .24
+      const dx = pointer.x - pointer.px
+      const dy = pointer.y - pointer.py
+      pointer.speed = Math.min(Math.hypot(dx, dy), 42)
+      pointer.px = pointer.x
+      pointer.py = pointer.y
+      if (pointer.active) {
+        trail.unshift({ x: pointer.x, y: pointer.y })
+        const trailLength = Math.floor(12 + pointer.speed * 1.05)
+        trail.length = Math.min(trail.length, trailLength)
+        if (pointer.speed > 1.5 && Math.random() < Math.min(.75, pointer.speed / 24)) emit(pointer.speed > 18 ? 2 : 1)
+      }
+      const glow = context.createRadialGradient(pointer.x, pointer.y, 0, pointer.x, pointer.y, 95 + pointer.speed * 2)
+      glow.addColorStop(0, `rgba(255,255,255,${.17 + pointer.speed / 180})`)
+      glow.addColorStop(.18, `rgba(76,224,228,${.11 + pointer.speed / 220})`)
+      glow.addColorStop(.52, "rgba(142,125,255,.08)")
+      glow.addColorStop(1, "rgba(142,125,255,0)")
+      context.fillStyle = glow
+      context.beginPath(); context.arc(pointer.x, pointer.y, 95 + pointer.speed * 2, 0, Math.PI * 2); context.fill()
+      context.globalCompositeOperation = "lighter"
+      drawPath(trail, 15 + pointer.speed * .25, .1, `rgba(93,73,230,.12)`)
+      drawPath(trail, 6 + pointer.speed * .12, .18, `rgba(76,224,228,.25)`)
+      drawPath(trail, 2, .8, "rgba(207,248,255,.75)")
+      trail.slice(0, 8).forEach((point, index) => { context.fillStyle = `rgba(142,125,255,${.16 - index * .015})`; context.beginPath(); context.arc(point.x, point.y, 2 + (8 - index) * .35, 0, Math.PI * 2); context.fill() })
+      particles.forEach((particle) => { particle.x += particle.vx * delta; particle.y += particle.vy * delta; particle.vx *= .985; particle.vy *= .985; particle.life -= .018 * delta; context.fillStyle = `rgba(119,238,255,${Math.max(0, particle.life)})`; context.shadowBlur = 12; context.shadowColor = "#4ce0e4"; context.beginPath(); context.arc(particle.x, particle.y, particle.size * particle.life, 0, Math.PI * 2); context.fill(); context.shadowBlur = 0 })
+      for (let i = particles.length - 1; i >= 0; i -= 1) if (particles[i].life <= 0) particles.splice(i, 1)
+      bursts.forEach((burst) => { burst.age += .035 * delta; context.strokeStyle = `rgba(142,125,255,${Math.max(0, .45 - burst.age)})`; context.lineWidth = 1.5; context.beginPath(); context.arc(burst.x, burst.y, burst.age * 48, 0, Math.PI * 2); context.stroke() })
+      for (let i = bursts.length - 1; i >= 0; i -= 1) if (bursts[i].age >= 1) bursts.splice(i, 1)
+      context.fillStyle = "rgba(255,255,255,.95)"; context.shadowBlur = 18; context.shadowColor = "#8e7dff"; context.beginPath(); context.arc(pointer.x, pointer.y, 2.2 + pointer.speed * .035, 0, Math.PI * 2); context.fill(); context.shadowBlur = 0
+      context.globalCompositeOperation = "source-over"
+    }
+    resize(); render(performance.now())
+    window.addEventListener("resize", resize); window.addEventListener("pointermove", move, { passive: true }); window.addEventListener("pointerdown", click)
+    return () => { cancelAnimationFrame(frameId); window.removeEventListener("resize", resize); window.removeEventListener("pointermove", move); window.removeEventListener("pointerdown", click) }
+  }, [])
+
+  return <canvas ref={ref} className="cursor-power-canvas" aria-hidden="true" />
+}
+
 function HUD({ onTerminal }) { return <aside className="hud glass-panel"><div className="hud-top"><span className="status-dot" /> SYSTEM ONLINE <span className="hud-time">{new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</span></div><div className="hud-metric"><span>SESSION</span><strong>CHATHUPA.OS</strong></div><div className="hud-bars"><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /></div><button onClick={onTerminal} className="hud-command"><Terminal size={14} /> OPEN TERMINAL <kbd>⌘ K</kbd></button></aside> }
 
 function App() {
@@ -78,13 +182,22 @@ function App() {
   const visibleProjects = useMemo(() => filter === "ALL" ? projects : projects.filter((p) => p.type.includes(filter)), [filter])
 
   useEffect(() => { const key = (e) => { if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") { e.preventDefault(); setPaletteOpen(true) } if (e.key === "Escape") { setPaletteOpen(false); setTerminalOpen(false) } }; window.addEventListener("keydown", key); return () => window.removeEventListener("keydown", key) }, [])
+  useEffect(() => {
+    const shell = document.querySelector(".portfolio-shell")
+    const movePointer = (event) => {
+      shell?.style.setProperty("--pointer-x", `${event.clientX}px`)
+      shell?.style.setProperty("--pointer-y", `${event.clientY}px`)
+    }
+    window.addEventListener("pointermove", movePointer, { passive: true })
+    return () => window.removeEventListener("pointermove", movePointer)
+  }, [])
   const go = (id) => { document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }); setMenuOpen(false); setPaletteOpen(false) }
   const runCommand = (e) => { if (e.key !== "Enter") return; const value = command.trim().toLowerCase(); const responses = { help: "commands: about · skills · projects · experience · education · contact · github · linkedin · clear", about: `${portfolioConfig.name} — ${portfolioConfig.title}.`, skills: portfolioConfig.skills.frontend.concat(portfolioConfig.skills.backend).join(" · "), projects: "6 verified builds loaded. navigate to /projects to inspect.", experience: "RedCode Solution · Software Engineering Trainee · January 2025 – August 2025.", education: "University of Sri Jayewardenepura · second-year undergraduate.", contact: `email ${portfolioConfig.email}`, github: portfolioConfig.github, linkedin: portfolioConfig.linkedin }; setOutput((current) => value === "clear" ? [] : [...current, `> ${value}`, responses[value] || "command not found — try 'help'"]); setCommand("") }
   const [contactForm, setContactForm] = useState({ name: "", email: "", message: "" })
   const [contactStatus, setContactStatus] = useState("idle")
   const submitContact = async (e) => { e.preventDefault(); setContactStatus("sending"); try { const data = new FormData(e.currentTarget); data.append("access_key", "3aa15a33-2b36-4eb9-9859-b55b7a6d76d2"); data.append("subject", `Portfolio message from ${contactForm.name}`); const response = await fetch("https://api.web3forms.com/submit", { method: "POST", body: data }).then((res) => res.json()); if (!response.success) throw new Error("Unable to send"); setContactForm({ name: "", email: "", message: "" }); setContactStatus("sent"); } catch { setContactStatus("error") } }
 
-  return <main className="portfolio-shell"><EnergyField /><div className="ambient ambient-one" /><div className="ambient ambient-two" />
+  return <main className="portfolio-shell"><EnergyField /><CursorPowerTrail /><div className="ambient ambient-one" /><div className="ambient ambient-two" />
     <header className="site-header"><a href="#home" className="brand" onClick={() => go("home")}><span>CC</span><small>CREATIVE DEVELOPER</small></a><nav className={menuOpen ? "nav-links open" : "nav-links"}>{["about", "skills", "projects", "contact"].map((id, i) => <a key={id} href={`#${id}`} onClick={() => go(id)}><b>0{i + 1}</b>{id.toUpperCase()}</a>)}</nav><div className="header-actions"><button className="palette-trigger" onClick={() => setPaletteOpen(true)}><Command size={15} /> COMMAND <kbd>⌘K</kbd></button><button className="menu-trigger" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle navigation">{menuOpen ? <X /> : <Menu />}</button></div></header>
     <HUD onTerminal={() => setTerminalOpen(true)} />
     <section id="home" className="hero section-wrap"><div className="hero-copy"><div className="eyebrow"><span className="pulse" /> BUILDING IDEAS INTO SOFTWARE <span className="eyebrow-line" /></div><p className="hero-kicker">FULL STACK DEVELOPER <span>/</span> SOFTWARE ENGINEERING ENTHUSIAST</p><h1>Building <em>digital</em><br />universes<span className="accent-dot">.</span></h1><p className="hero-lede">I&apos;m Chathupa Chamika — an enthusiastic developer transforming complex problems into clear, purposeful experiences with code.</p><div className="hero-actions"><Button onClick={() => go("projects")} className="primary-cta">EXPLORE MY WORK <ArrowUpRight size={17} /></Button><a className="text-link" href={cvFile} download><Download size={16} /> DOWNLOAD CV</a></div><div className="hero-meta"><span><b>BASED IN</b> COLOMBO, LK</span><span><b>FOCUS</b> WEB · SYSTEMS · UX</span></div></div><div className="hero-visual"><div className="orbit orbit-a" /><div className="orbit orbit-b" /><div className="portrait-frame"><img src={portrait} alt="Chathupa Chamika" /><div className="scanline" /></div><div className="visual-label label-top">IDENTITY // 001</div><div className="visual-label label-bottom">JAVA · REACT · SPRING</div><div className="coordinate">06°55&apos;N<br />79°51&apos;E</div></div><div className="scroll-cue"><span /> SCROLL TO EXPLORE</div></section>
