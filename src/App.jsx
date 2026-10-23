@@ -150,16 +150,26 @@ function CursorPowerTrail() {
       glow.addColorStop(1, "rgba(142,125,255,0)")
       context.fillStyle = glow
       context.beginPath(); context.arc(pointer.x, pointer.y, 95 + pointer.speed * 2, 0, Math.PI * 2); context.fill()
-      context.globalCompositeOperation = "lighter"
-      drawPath(trail, 15 + pointer.speed * .25, .1, `rgba(93,73,230,.12)`)
-      drawPath(trail, 6 + pointer.speed * .12, .18, `rgba(76,224,228,.25)`)
-      drawPath(trail, 2, .8, "rgba(207,248,255,.75)")
-      trail.slice(0, 8).forEach((point, index) => { context.fillStyle = `rgba(142,125,255,${.16 - index * .015})`; context.beginPath(); context.arc(point.x, point.y, 2 + (8 - index) * .35, 0, Math.PI * 2); context.fill() })
+  context.globalCompositeOperation = "lighter"
+  const flameWidth = 22 + pointer.speed * .55
+  const flameHeight = 48 + pointer.speed * 1.25
+  const flame = context.createRadialGradient(pointer.x, pointer.y + flameHeight * .2, 0, pointer.x, pointer.y, flameHeight)
+  flame.addColorStop(0, `rgba(255,255,255,${.72 + pointer.speed / 180})`)
+  flame.addColorStop(.16, `rgba(117,247,255,${.62 + pointer.speed / 260})`)
+  flame.addColorStop(.46, "rgba(22,212,220,.32)")
+  flame.addColorStop(.75, "rgba(71,88,255,.13)")
+  flame.addColorStop(1, "rgba(71,88,255,0)")
+  context.fillStyle = flame
+  context.beginPath(); context.ellipse(pointer.x, pointer.y + flameHeight * .12, flameWidth, flameHeight, 0, 0, Math.PI * 2); context.fill()
+  context.fillStyle = "rgba(207,255,255,.38)"
+  context.beginPath(); context.ellipse(pointer.x, pointer.y - flameHeight * .16, flameWidth * .38, flameHeight * .72, 0, 0, Math.PI * 2); context.fill()
+  trail.slice(0, Math.min(12, trail.length)).forEach((point, index) => { const fade = (1 - index / 12) * .35; const size = Math.max(1.5, (1 - index / 14) * (6 + pointer.speed * .12)); context.fillStyle = `rgba(77,232,239,${fade})`; context.beginPath(); context.ellipse(point.x, point.y + index * 2.4, size, size * (1.5 + index / 8), 0, 0, Math.PI * 2); context.fill() })
       particles.forEach((particle) => { particle.x += particle.vx * delta; particle.y += particle.vy * delta; particle.vx *= .985; particle.vy *= .985; particle.life -= .018 * delta; context.fillStyle = `rgba(119,238,255,${Math.max(0, particle.life)})`; context.shadowBlur = 12; context.shadowColor = "#4ce0e4"; context.beginPath(); context.arc(particle.x, particle.y, particle.size * particle.life, 0, Math.PI * 2); context.fill(); context.shadowBlur = 0 })
       for (let i = particles.length - 1; i >= 0; i -= 1) if (particles[i].life <= 0) particles.splice(i, 1)
       bursts.forEach((burst) => { burst.age += .035 * delta; context.strokeStyle = `rgba(142,125,255,${Math.max(0, .45 - burst.age)})`; context.lineWidth = 1.5; context.beginPath(); context.arc(burst.x, burst.y, burst.age * 48, 0, Math.PI * 2); context.stroke() })
       for (let i = bursts.length - 1; i >= 0; i -= 1) if (bursts[i].age >= 1) bursts.splice(i, 1)
-      context.fillStyle = "rgba(255,255,255,.95)"; context.shadowBlur = 18; context.shadowColor = "#8e7dff"; context.beginPath(); context.arc(pointer.x, pointer.y, 2.2 + pointer.speed * .035, 0, Math.PI * 2); context.fill(); context.shadowBlur = 0
+      const flicker = Math.sin(now * .018) * 2
+  context.fillStyle = "rgba(255,255,255,.98)"; context.shadowBlur = 22; context.shadowColor = "#4ce0e4"; context.beginPath(); context.arc(pointer.x, pointer.y + flicker, 2.5 + pointer.speed * .04, 0, Math.PI * 2); context.fill(); context.shadowBlur = 0
       context.globalCompositeOperation = "source-over"
     }
     resize(); render(performance.now())
