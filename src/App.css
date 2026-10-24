@@ -86,3 +86,31 @@
 .empty-state { color:var(--muted); font:11px 'DM Mono'; padding:30px 0; text-align:center; }.media-viewer { width:min(1000px,100%); max-height:92vh; padding:26px; position:relative; display:flex; flex-direction:column; align-items:center; }.media-viewer > img { max-width:100%; max-height:74vh; object-fit:contain; }.media-viewer > p { margin:14px 0 0; color:var(--ink); text-transform:capitalize; }.viewer-controls { display:flex; align-items:center; gap:22px; margin-top:16px; color:var(--cyan); font:10px 'DM Mono'; }.viewer-controls button { border:1px solid rgba(76,224,228,.4); color:#fff; background:transparent; width:34px; height:30px; cursor:pointer; }.viewer-controls button:hover { background:rgba(76,224,228,.14); }
 @media (max-width:800px) { .frequency-actions { flex-direction:column; }.all-stacks-trigger { align-self:flex-start; }.certificate-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }.memory-grid { grid-template-columns:repeat(2,1fr); grid-auto-rows:150px; }.memory-0,.memory-1,.memory-2,.memory-3,.memory-4,.memory-5 { grid-column:span 1; grid-row:span 1; }.memory-0 { grid-column:span 2; }.stack-explorer { padding:18px; }.explorer-head h3 { font-size:22px; } }
 @media (prefers-reduced-motion:reduce) { .certificate-card, .memory-card, .explorer-node { transition:none; }.core-ring, .node-orbit { animation:none; } }
+
+/* Centered orbital frequency system */
+.tech-universe { display:block; min-height:650px; padding:0; overflow:hidden; }
+.tech-universe:before { inset:12% 26%; animation:orbit-drift 18s linear infinite; }
+.tech-universe:after { inset:24% 14%; animation:orbit-drift-reverse 26s linear infinite; }
+.universe-core.profile-core { position:absolute; left:50%; top:50%; margin:0; width:156px; height:156px; transform:translate(-50%,-50%); }
+.tech-node { --orbit-radius:250px; --orbit-duration:30s; --orbit-direction:1; position:absolute; left:50%; top:50%; width:86px; min-height:92px; transform-origin:center; animation:tech-orbit var(--orbit-duration) linear infinite; animation-direction:normal; }
+.tech-node:hover, .tech-node:focus-visible { transform:translate(-50%,-50%) scale(1.14); animation-play-state:paused; }
+.node-ring-0 { --orbit-radius:170px; --orbit-duration:24s; }
+.node-ring-1 { --orbit-radius:235px; --orbit-duration:34s; animation-direction:reverse; }
+.node-ring-2 { --orbit-radius:292px; --orbit-duration:44s; }
+.node-slot-0 { --orbit-start:0deg; } .node-slot-1 { --orbit-start:45deg; } .node-slot-2 { --orbit-start:90deg; } .node-slot-3 { --orbit-start:135deg; } .node-slot-4 { --orbit-start:180deg; } .node-slot-5 { --orbit-start:225deg; } .node-slot-6 { --orbit-start:270deg; } .node-slot-7 { --orbit-start:315deg; }
+@keyframes tech-orbit { from { transform:translate(-50%,-50%) rotate(var(--orbit-start)) translateY(calc(var(--orbit-radius) * -1)) rotate(calc(var(--orbit-start) * -1)); } to { transform:translate(-50%,-50%) rotate(calc(var(--orbit-start) + 360deg)) translateY(calc(var(--orbit-radius) * -1)) rotate(calc((var(--orbit-start) + 360deg) * -1)); } }
+@keyframes orbit-drift { to { transform:rotate(342deg); } } @keyframes orbit-drift-reverse { to { transform:rotate(-332deg); } }
+.profile-core > img { width:96px; height:96px; }
+/* Editorial memories treatment */
+.memory-grid { grid-template-columns:repeat(12,1fr); grid-auto-rows:110px; gap:14px; padding-right:8%; }
+.memory-card { border:0; background:#0c1228; box-shadow:0 12px 30px rgba(0,0,0,.22); }
+.memory-card:before { content:""; position:absolute; inset:0; z-index:1; border:1px solid rgba(255,255,255,.12); pointer-events:none; transition:border-color .3s; }
+.memory-card:hover:before, .memory-card:focus-visible:before { border-color:rgba(112,226,255,.7); }
+.memory-card span { opacity:0; transform:translateY(8px); transition:opacity .3s, transform .3s; font-family:'Space Grotesk'; font-size:13px; }
+.memory-card:hover span, .memory-card:focus-visible span { opacity:1; transform:translateY(0); }
+.memory-card small { opacity:.75; }
+.memory-0 { grid-column:span 6; grid-row:span 5; } .memory-1 { grid-column:span 3; grid-row:span 3; } .memory-2 { grid-column:span 3; grid-row:span 4; } .memory-3 { grid-column:span 4; grid-row:span 4; } .memory-4 { grid-column:span 4; grid-row:span 3; } .memory-5 { grid-column:span 4; grid-row:span 3; }
+.memory-6 { grid-column:span 3; grid-row:span 4; } .memory-7 { grid-column:span 3; grid-row:span 3; } .memory-8 { grid-column:span 6; grid-row:span 4; } .memory-9 { grid-column:span 3; grid-row:span 3; } .memory-10 { grid-column:span 3; grid-row:span 4; } .memory-11 { grid-column:span 4; grid-row:span 3; }
+@media (max-width:900px) { .tech-universe { min-height:570px; }.node-ring-0 { --orbit-radius:130px; }.node-ring-1 { --orbit-radius:195px; }.node-ring-2 { --orbit-radius:235px; }.tech-node { width:70px; min-height:78px; }.tech-node img { width:32px; height:32px; }.universe-core.profile-core { width:126px; height:126px; }.profile-core > img { width:78px; height:78px; }.memory-grid { padding-right:0; } }
+@media (max-width:620px) { .tech-universe { min-height:500px; }.node-ring-0 { --orbit-radius:96px; }.node-ring-1 { --orbit-radius:154px; }.node-ring-2 { --orbit-radius:205px; }.tech-node { width:58px; min-height:66px; }.tech-node strong { font-size:7px; }.tech-node small { font-size:5px; }.tech-node img { width:26px; height:26px; }.universe-core.profile-core { width:104px; height:104px; }.profile-core > img { width:64px; height:64px; }.memory-grid { grid-template-columns:repeat(2,1fr); grid-auto-rows:140px; gap:9px; }.memory-0,.memory-1,.memory-2,.memory-3,.memory-4,.memory-5,.memory-6,.memory-7,.memory-8,.memory-9,.memory-10,.memory-11 { grid-column:span 1; grid-row:span 1; }.memory-0,.memory-8 { grid-column:span 2; grid-row:span 2; }.memory-card span { opacity:1; transform:none; font-size:10px; } }
+@media (prefers-reduced-motion:reduce) { .tech-node { animation:none; transform:translate(-50%,-50%) rotate(var(--orbit-start)) translateY(calc(var(--orbit-radius) * -1)) rotate(calc(var(--orbit-start) * -1)); }.tech-node:hover,.tech-node:focus-visible { transform:translate(-50%,-50%) rotate(var(--orbit-start)) translateY(calc(var(--orbit-radius) * -1)) rotate(calc(var(--orbit-start) * -1)) scale(1.08); } }
