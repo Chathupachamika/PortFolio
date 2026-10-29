@@ -15,6 +15,13 @@ import {
   Loader2,
   Terminal,
   X,
+  House,
+  UserRound,
+  BriefcaseBusiness,
+  Layers3,
+  Images,
+  GraduationCap,
+  Award,
 } from "lucide-react"
 import cvFile from "./assets/documents/ChathupaCV.pdf"
 import portrait from "./assets/images/headshotchathupa.png"
@@ -92,6 +99,9 @@ function App() {
   const [mediaViewer, setMediaViewer] = useState(null)
   const [photoFilter, setPhotoFilter] = useState("ALL")
   const memoryRailRef = useRef(null)
+  const dockTrackRef = useRef(null)
+  const sectionTouchRef = useRef(null)
+  const [activeSection, setActiveSection] = useState("home")
   const [command, setCommand] = useState("")
   const [output, setOutput] = useState(["> boot portfolio --interactive", "system ready. type 'help' to explore."])
   const visibleProjects = useMemo(() => filter === "ALL" ? projects : projects.filter((p) => p.type.includes(filter)), [filter])
@@ -131,13 +141,79 @@ function App() {
     window.addEventListener("pointermove", movePointer, { passive: true })
     return () => window.removeEventListener("pointermove", movePointer)
   }, [])
-  const go = (id) => { document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }); setMenuOpen(false); setPaletteOpen(false) }
+
+  useEffect(() => {
+    const track = dockTrackRef.current
+    const activeLink = track?.querySelector(".dock-link.active")
+    if (!track || !activeLink) return
+    const left = activeLink.offsetLeft - (track.clientWidth - activeLink.clientWidth) / 2
+    track.scrollTo({ left, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" })
+  }, [activeSection])
+  const sectionOrder = ["home", "about", "experience", "skills", "certifications", "projects", "moments", "contact"]
+  const sectionLabels = { home: "Home", about: "About", experience: "Journey", skills: "Skills", certifications: "Awards", projects: "Projects", moments: "Moments", contact: "Contact" }
+  const sectionIcons = { home: House, about: UserRound, experience: BriefcaseBusiness, skills: Layers3, certifications: Award, projects: GraduationCap, moments: Images, contact: Mail }
+  const go = (id) => {
+    if (!sectionOrder.includes(id)) return
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" })
+    if (window.location.hash !== `#${id}`) window.history.pushState({ section: id }, "", `#${id}`)
+    setActiveSection(id)
+    setMenuOpen(false)
+    setPaletteOpen(false)
+  }
+
+  useEffect(() => {
+    let frame = 0
+    const syncSection = () => {
+      cancelAnimationFrame(frame)
+      frame = requestAnimationFrame(() => {
+        const activationLine = window.innerHeight * 0.38
+        let current = sectionOrder[0]
+        for (const id of sectionOrder) {
+          const section = document.getElementById(id)
+          if (section && section.getBoundingClientRect().top <= activationLine) current = id
+        }
+        setActiveSection((previous) => previous === current ? previous : current)
+      })
+    }
+    const restoreHash = () => {
+      const id = window.location.hash.slice(1)
+      if (sectionOrder.includes(id)) {
+        document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" })
+        setActiveSection(id)
+      }
+    }
+    window.addEventListener("scroll", syncSection, { passive: true })
+    window.addEventListener("resize", syncSection, { passive: true })
+    window.addEventListener("popstate", restoreHash)
+    restoreHash()
+    syncSection()
+    return () => { cancelAnimationFrame(frame); window.removeEventListener("scroll", syncSection); window.removeEventListener("resize", syncSection); window.removeEventListener("popstate", restoreHash) }
+  }, [])
+
+  const handleSectionTouchStart = (event) => {
+    if (event.touches.length !== 1) { sectionTouchRef.current = null; return }
+    const target = event.target
+    const horizontalScroller = target.closest(".memory-grid, [data-no-section-swipe]")
+    const interactive = target.closest("a, button, input, textarea, select, [role='dialog'], [contenteditable='true']")
+    sectionTouchRef.current = horizontalScroller || interactive ? null : { x: event.touches[0].clientX, y: event.touches[0].clientY }
+  }
+  const handleSectionTouchEnd = (event) => {
+    const start = sectionTouchRef.current
+    sectionTouchRef.current = null
+    if (!start || event.changedTouches.length !== 1) return
+    const dx = event.changedTouches[0].clientX - start.x
+    const dy = event.changedTouches[0].clientY - start.y
+    if (Math.abs(dx) < 72 || Math.abs(dx) < Math.abs(dy) * 1.35) return
+    const currentIndex = sectionOrder.indexOf(activeSection)
+    const nextIndex = currentIndex + (dx < 0 ? 1 : -1)
+    if (nextIndex >= 0 && nextIndex < sectionOrder.length) go(sectionOrder[nextIndex])
+  }
   const runCommand = (e) => { if (e.key !== "Enter") return; const value = command.trim().toLowerCase(); const responses = { help: "commands: about · skills · projects · experience · education · contact · github · linkedin · clear", about: `${portfolioConfig.name} — ${portfolioConfig.title}.`, skills: portfolioConfig.skills.frontend.concat(portfolioConfig.skills.backend).join(" · "), projects: "6 verified builds loaded. navigate to /projects to inspect.", experience: "RedCode Solution · Software Engineering Trainee · January 2025 – August 2025.", education: "University of Sri Jayewardenepura · second-year undergraduate.", contact: `email ${portfolioConfig.email}`, github: portfolioConfig.github, linkedin: portfolioConfig.linkedin }; setOutput((current) => value === "clear" ? [] : [...current, `> ${value}`, responses[value] || "command not found — try 'help'"]); setCommand("") }
   const [contactForm, setContactForm] = useState({ name: "", email: "", message: "" })
   const [contactStatus, setContactStatus] = useState("idle")
   const submitContact = async (e) => { e.preventDefault(); setContactStatus("sending"); try { const data = new FormData(e.currentTarget); data.append("access_key", "3aa15a33-2b36-4eb9-9859-b55b7a6d76d2"); data.append("subject", `Portfolio message from ${contactForm.name}`); const response = await fetch("https://api.web3forms.com/submit", { method: "POST", body: data }).then((res) => res.json()); if (!response.success) throw new Error("Unable to send"); setContactForm({ name: "", email: "", message: "" }); setContactStatus("sent"); } catch { setContactStatus("error") } }
 
-  return <main className="portfolio-shell"><EnergyField /><BluePowerFlameCursor /><div className="ambient ambient-one" /><div className="ambient ambient-two" />
+  return <main className="portfolio-shell" onTouchStart={handleSectionTouchStart} onTouchEnd={handleSectionTouchEnd} onTouchCancel={() => { sectionTouchRef.current = null }}><EnergyField /><BluePowerFlameCursor /><div className="ambient ambient-one" /><div className="ambient ambient-two" />
     <header className="site-header"><a href="#home" className="brand" onClick={() => go("home")}><span>CC</span><small>CREATIVE DEVELOPER</small></a><nav className={menuOpen ? "nav-links open" : "nav-links"}>{["about", "skills", "projects", "moments", "contact"].map((id, i) => <a key={id} href={`#${id}`} onClick={() => go(id)}><b>0{i + 1}</b>{id === "moments" ? "OFFLINE SIGNALS" : id.toUpperCase()}</a>)}</nav><div className="header-actions"><button className="palette-trigger" onClick={() => setPaletteOpen(true)}><Command size={15} /> COMMAND <kbd>⌘K</kbd></button><button className="menu-trigger" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle navigation">{menuOpen ? <X /> : <Menu />}</button></div></header>
     <HUD onTerminal={() => setTerminalOpen(true)} />
     <section id="home" className="hero section-wrap"><div className="hero-copy"><div className="eyebrow"><span className="pulse" /> BUILDING IDEAS INTO SOFTWARE <span className="eyebrow-line" /></div><p className="hero-kicker">FULL STACK DEVELOPER <span>/</span> SOFTWARE ENGINEERING ENTHUSIAST</p><h1>Building <em>digital</em><br />universes<span className="accent-dot">.</span></h1><p className="hero-lede">I&apos;m Chathupa Chamika — an enthusiastic developer transforming complex problems into clear, purposeful experiences with code.</p><div className="hero-actions"><Button onClick={() => go("projects")} className="primary-cta">EXPLORE MY WORK <ArrowUpRight size={17} /></Button><a className="text-link" href={cvFile} download><Download size={16} /> DOWNLOAD CV</a></div><div className="hero-meta"><span><b>BASED IN</b> COLOMBO, LK</span><span><b>FOCUS</b> WEB · SYSTEMS · UX</span></div></div><div className="hero-visual"><div className="orbit orbit-a" /><div className="orbit orbit-b" /><div className="portrait-frame"><img src={portrait} alt="Chathupa Chamika" /><div className="scanline" /></div><div className="visual-label label-top">IDENTITY // 001</div><div className="visual-label label-bottom">JAVA · REACT · SPRING</div><div className="coordinate">06°55&apos;N<br />79°51&apos;E</div></div><div className="scroll-cue"><span /> SCROLL TO EXPLORE</div></section>
@@ -148,6 +224,18 @@ function App() {
     <section id="projects" className="section-wrap projects-section"><div className="section-heading project-heading"><div><span>03 / SELECTED BUILDS</span><h2>Things I&apos;ve<br /><em>made real.</em></h2></div><div className="filter-row">{["ALL", "FULL STACK", "FRONTEND", "DESKTOP"].map((item) => <button key={item} className={filter === item.split(" ")[0] ? "active" : ""} onClick={() => setFilter(item.split(" ")[0])}>{item}</button>)}</div></div><div className="project-grid">{visibleProjects.map((project, index) => <a className={`project-card ${project.accent}`} href={project.link} target="_blank" rel="noreferrer" key={project.title}><div className="project-image"><img src={project.image} alt="" /><div className="project-number">0{index + 1}</div><ExternalLink size={20} className="project-arrow" /></div><div className="project-info"><span>{project.type}</span><h3>{project.title}</h3><p>{project.description}</p><div className="tag-row">{project.tags.map((tag) => <b key={tag}>{tag}</b>)}</div></div></a>)}</div></section>
     <section id="moments" className="section-wrap media-section moments-section"><div className="section-heading compact"><div><span>04 / OFFLINE SIGNALS</span><h2>Beyond the code —<br /><em>my moments.</em></h2></div><span className="media-count">{photoData.length.toString().padStart(2, "0")} MEMORY FRAGMENTS</span></div><div className="moments-toolbar"><p>A little proof that life happens between the builds.</p><div className="moment-filters" role="tablist" aria-label="Photo collections">{["ALL", "FUNNY TIMES", "OTHERS"].map((filterName) => <button type="button" key={filterName} className={photoFilter === filterName ? "active" : ""} onClick={() => setPhotoFilter(filterName)}>{filterName}</button>)}</div></div><div className="memory-archive"><div className="archive-index">{String(visiblePhotos.length).padStart(2, "0")}<span>VISIBLE</span></div><div className="memory-grid" ref={memoryRailRef} aria-label="Automatically scrolling photo carousel">{visiblePhotos.map((item) => <button type="button" className="memory-card" key={item.path} onClick={() => setMediaViewer({ type: "photo", items: photoData, index: item.index })}><MediaImage src={item.image} alt={item.title || "Personal photograph"} />{item.title && <span>{item.title}</span>}<small>{item.collection} ↗</small></button>)}</div><div className="archive-hint">LIVE CAROUSEL · HOVER TO PAUSE <span>→</span></div></div></section>
     <section id="contact" className="section-wrap contact-section"><div className="contact-panel glass-panel"><div className="contact-intro"><span className="eyebrow">04 / OPEN CHANNEL</span><h2>Let&apos;s make<br /><em>something matter.</em></h2><p>Have a project, a question, or an interesting problem? Send a signal. I&apos;d love to hear from you.</p><div className="contact-data"><a href={`mailto:${portfolioConfig.email}`}><Mail size={17} /> EMAIL <strong>{portfolioConfig.email}</strong></a><a href="tel:+94771234567"><Phone size={17} /> PHONE <strong>+94 77 123 4567</strong></a><a href="https://maps.google.com/?q=Colombo,+Sri+Lanka" target="_blank" rel="noreferrer"><MapPin size={17} /> LOCATION <strong>COLOMBO, SRI LANKA</strong></a><div className="social-row"><a href={portfolioConfig.github} target="_blank" rel="noreferrer" aria-label="GitHub profile"><Github /></a><a href={portfolioConfig.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn profile"><Linkedin /></a></div></div></div><form className="contact-form" onSubmit={submitContact}><div className="form-heading"><span>TRANSMISSION FORM</span><small>{contactStatus === "sent" ? "MESSAGE SENT" : contactStatus === "error" ? "TRY AGAIN" : "I REPLY FAST"}</small></div><label htmlFor="contact-name">YOUR NAME<input id="contact-name" name="name" required placeholder="John Doe" value={contactForm.name} onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })} /></label><label htmlFor="contact-email">EMAIL ADDRESS<input id="contact-email" name="email" type="email" required placeholder="you@example.com" value={contactForm.email} onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })} /></label><label htmlFor="contact-message">YOUR MESSAGE<textarea id="contact-message" name="message" required placeholder="Tell me about your idea..." value={contactForm.message} onChange={(e) => setContactForm({ ...contactForm, message: e.target.value })} /></label><button type="submit" disabled={contactStatus === "sending"}>{contactStatus === "sending" ? <><Loader2 size={16} className="spin" /> SENDING...</> : <><Send size={16} /> SEND TRANSMISSION</>}</button>{contactStatus === "sent" && <p className="form-success">Your message is in orbit. I&apos;ll be in touch soon.</p>}{contactStatus === "error" && <p className="form-error">Something went wrong. Please email me directly instead.</p>}</form></div></section>
+    <nav className="mobile-section-dock" aria-label="Portfolio sections">
+      <div className="mobile-section-dock-track" ref={dockTrackRef}>
+        {sectionOrder.map((id) => {
+          const Icon = sectionIcons[id]
+          const active = activeSection === id
+          return <a key={id} href={`#${id}`} className={`dock-link${active ? " active" : ""}`} aria-label={sectionLabels[id]} aria-current={active ? "location" : undefined} onClick={(event) => { event.preventDefault(); go(id) }}>
+            <span className="dock-icon"><Icon size={19} strokeWidth={active ? 2.2 : 1.8} /></span>
+            <span className="dock-label">{sectionLabels[id]}</span>
+          </a>
+        })}
+      </div>
+    </nav>
     {mediaViewer && <div className="overlay media-viewer-overlay" onClick={() => setMediaViewer(null)}><div className="media-viewer glass-panel" role="dialog" aria-modal="true" aria-label="Image viewer" onClick={(e) => e.stopPropagation()}><button className="detail-close" onClick={() => setMediaViewer(null)} aria-label="Close image viewer"><X size={17} /></button><MediaImage src={mediaViewer.items[mediaViewer.index].image} alt={mediaViewer.items[mediaViewer.index].title || "Personal photograph"} loading="eager" /><div className="viewer-controls"><button onClick={() => setMediaViewer({ ...mediaViewer, index: (mediaViewer.index - 1 + mediaViewer.items.length) % mediaViewer.items.length })} aria-label="Previous image">←</button><button onClick={() => setMediaViewer({ ...mediaViewer, index: (mediaViewer.index + 1) % mediaViewer.items.length })} aria-label="Next image">→</button></div>{mediaViewer.items[mediaViewer.index].title && <p>{mediaViewer.items[mediaViewer.index].title}</p>}</div></div>}
     <footer><span>© 2025 CHATHUPA CHAMIKA</span><span>DESIGNED &amp; BUILT WITH INTENT</span><span className="footer-powered">POWERED BY <img src={kubiForgeLogo} alt="Kubi Forge" /> <strong>KUBI FORGE</strong></span><a href="#home" onClick={() => go("home")}>BACK TO TOP ↑</a></footer>
     {paletteOpen && <div className="overlay" onClick={() => setPaletteOpen(false)}><div className="palette glass-panel" onClick={(e) => e.stopPropagation()}><div className="palette-input"><Command /><input autoFocus placeholder="What do you want to explore?" onChange={(e) => setCommand(e.target.value)} value={command} /></div>{["about", "skills", "projects", "contact"].filter((item) => item.includes(command.toLowerCase())).map((item) => <button key={item} onClick={() => go(item)}><span>GO TO</span>{item.toUpperCase()} <ChevronDown size={15} /></button>)}<small>ESC TO CLOSE · ↑↓ TO NAVIGATE</small></div></div>}
