@@ -76,8 +76,8 @@ export default function Contact() {
     {
       icon: <Phone className="h-5 w-5" />,
       title: "Phone",
-      value: "+94 77 123 4567",
-      link: "tel:+94771234567",
+      value: "+94 754278741",
+      link: "tel:+94754278741",
     },
     {
       icon: <MapPin className="h-5 w-5" />,
