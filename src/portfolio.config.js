@@ -3,6 +3,8 @@ export const portfolioConfig = {
   title: "Full-Stack Developer | University Undergraduate | Software Engineering Enthusiast",
   location: "Colombo, Sri Lanka",
   email: "Chathupachamika765@gmail.com",
+  phone: "+94 75 427 8741",
+  phoneLink: "tel:+94754278741",
   github: "https://github.com/Chathupachamika",
   linkedin: "https://www.linkedin.com/in/chathupa-chamika/",
   organization: "Kubi Forge",

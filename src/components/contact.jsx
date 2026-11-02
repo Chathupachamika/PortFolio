@@ -9,6 +9,7 @@ import { Button } from "./ui/button"
 import { Badge } from "./ui/badge"
 import { useToast } from "./ui/use-toast"
 import { Mail, MapPin, Phone, Github, Linkedin, Facebook, Send, Loader2 } from "lucide-react"
+import { portfolioConfig } from "../portfolio.config"
 
 export default function Contact() {
   const { toast } = useToast()
@@ -76,8 +77,8 @@ export default function Contact() {
     {
       icon: <Phone className="h-5 w-5" />,
       title: "Phone",
-      value: "+94 754278741",
-      link: "tel:+94754278741",
+      value: portfolioConfig.phone,
+      link: portfolioConfig.phoneLink,
     },
     {
       icon: <MapPin className="h-5 w-5" />,
