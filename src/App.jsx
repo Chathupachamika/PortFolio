@@ -18,11 +18,12 @@ import {
   House,
   UserRound,
   BriefcaseBusiness,
-  Layers3,
-  Images,
-  GraduationCap,
-  Award,
+  Camera,
+  Rocket,
+  Trophy,
+  Zap,
 } from "lucide-react"
+import { motion, useReducedMotion } from "framer-motion"
 import cvFile from "./assets/documents/ChathupaCV.pdf"
 import portrait from "./assets/images/headshotchathupa.png"
 import kubiForgeLogo from "./assets/kubiforge-logo.png"
@@ -88,6 +89,7 @@ function MediaImage({ src, alt, className = "", loading = "lazy", onClick }) {
 function HUD({ onTerminal }) { return <aside className="hud glass-panel"><div className="hud-top"><span className="status-dot" /> SYSTEM ONLINE <span className="hud-time">{new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</span></div><div className="hud-metric"><span>SESSION</span><strong>CHATHUPA.OS</strong></div><div className="hud-bars"><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /></div><button onClick={onTerminal} className="hud-command"><Terminal size={14} /> OPEN TERMINAL <kbd>⌘ K</kbd></button></aside> }
 
 function App() {
+  const prefersReducedMotion = useReducedMotion()
   const [menuOpen, setMenuOpen] = useState(false)
   const [paletteOpen, setPaletteOpen] = useState(false)
   const [terminalOpen, setTerminalOpen] = useState(false)
@@ -151,7 +153,8 @@ function App() {
   }, [activeSection])
   const sectionOrder = ["home", "about", "experience", "skills", "certifications", "projects", "moments", "contact"]
   const sectionLabels = { home: "Home", about: "About", experience: "Journey", skills: "Skills", certifications: "Awards", projects: "Projects", moments: "Moments", contact: "Contact" }
-  const sectionIcons = { home: House, about: UserRound, experience: BriefcaseBusiness, skills: Layers3, certifications: Award, projects: GraduationCap, moments: Images, contact: Mail }
+  const sectionIcons = { home: House, about: UserRound, experience: BriefcaseBusiness, skills: Zap, certifications: Trophy, projects: Rocket, moments: Camera, contact: Mail }
+  const dockOrder = ["home", "experience", "skills", "certifications", "projects", "moments", "contact", "about"]
   const go = (id) => {
     if (!sectionOrder.includes(id)) return
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" })
@@ -226,11 +229,12 @@ function App() {
     <section id="contact" className="section-wrap contact-section"><div className="contact-panel glass-panel"><div className="contact-intro"><span className="eyebrow">04 / OPEN CHANNEL</span><h2>Let&apos;s make<br /><em>something matter.</em></h2><p>Have a project, a question, or an interesting problem? Send a signal. I&apos;d love to hear from you.</p><div className="contact-data"><a href={`mailto:${portfolioConfig.email}`}><Mail size={17} /> EMAIL <strong>{portfolioConfig.email}</strong></a><a href="tel:+94771234567"><Phone size={17} /> PHONE <strong>+94 77 123 4567</strong></a><a href="https://maps.google.com/?q=Colombo,+Sri+Lanka" target="_blank" rel="noreferrer"><MapPin size={17} /> LOCATION <strong>COLOMBO, SRI LANKA</strong></a><div className="social-row"><a href={portfolioConfig.github} target="_blank" rel="noreferrer" aria-label="GitHub profile"><Github /></a><a href={portfolioConfig.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn profile"><Linkedin /></a></div></div></div><form className="contact-form" onSubmit={submitContact}><div className="form-heading"><span>TRANSMISSION FORM</span><small>{contactStatus === "sent" ? "MESSAGE SENT" : contactStatus === "error" ? "TRY AGAIN" : "I REPLY FAST"}</small></div><label htmlFor="contact-name">YOUR NAME<input id="contact-name" name="name" required placeholder="John Doe" value={contactForm.name} onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })} /></label><label htmlFor="contact-email">EMAIL ADDRESS<input id="contact-email" name="email" type="email" required placeholder="you@example.com" value={contactForm.email} onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })} /></label><label htmlFor="contact-message">YOUR MESSAGE<textarea id="contact-message" name="message" required placeholder="Tell me about your idea..." value={contactForm.message} onChange={(e) => setContactForm({ ...contactForm, message: e.target.value })} /></label><button type="submit" disabled={contactStatus === "sending"}>{contactStatus === "sending" ? <><Loader2 size={16} className="spin" /> SENDING...</> : <><Send size={16} /> SEND TRANSMISSION</>}</button>{contactStatus === "sent" && <p className="form-success">Your message is in orbit. I&apos;ll be in touch soon.</p>}{contactStatus === "error" && <p className="form-error">Something went wrong. Please email me directly instead.</p>}</form></div></section>
     <nav className="mobile-section-dock" aria-label="Portfolio sections">
       <div className="mobile-section-dock-track" ref={dockTrackRef}>
-        {sectionOrder.map((id) => {
+        {dockOrder.map((id) => {
           const Icon = sectionIcons[id]
           const active = activeSection === id
           return <a key={id} href={`#${id}`} className={`dock-link${active ? " active" : ""}`} aria-label={sectionLabels[id]} aria-current={active ? "location" : undefined} onClick={(event) => { event.preventDefault(); go(id) }}>
-            <span className="dock-icon"><Icon size={19} strokeWidth={active ? 2.2 : 1.8} /></span>
+            {active && <motion.span className="dock-indicator" layoutId="portfolio-dock-indicator" transition={prefersReducedMotion ? { duration: 0 } : { type: "spring", stiffness: 420, damping: 34 }} />}
+            {id === "about" ? <span className="dock-avatar"><img src={portrait} alt="" /><span className="dock-avatar-ring" /></span> : <span className="dock-icon"><Icon size={20} strokeWidth={active ? 2.2 : 1.8} /></span>}
             <span className="dock-label">{sectionLabels[id]}</span>
           </a>
         })}
