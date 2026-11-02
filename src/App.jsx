@@ -235,7 +235,6 @@ function App() {
           return <a key={id} href={`#${id}`} className={`dock-link${active ? " active" : ""}`} aria-label={sectionLabels[id]} aria-current={active ? "location" : undefined} onClick={(event) => { event.preventDefault(); go(id) }}>
             {active && <motion.span className="dock-indicator" layoutId="portfolio-dock-indicator" transition={prefersReducedMotion ? { duration: 0 } : { type: "spring", stiffness: 420, damping: 34 }} />}
             {id === "about" ? <span className="dock-avatar"><img src={portrait} alt="" /><span className="dock-avatar-ring" /></span> : <span className="dock-icon"><Icon size={20} strokeWidth={active ? 2.2 : 1.8} /></span>}
-            <span className="dock-label">{sectionLabels[id]}</span>
           </a>
         })}
       </div>
