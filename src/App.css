@@ -357,3 +357,43 @@
 @media (max-width:800px) {
   .footer-powered { order:4; width:100%; justify-content:center; padding-top:6px; border-top:1px solid var(--line); }
 }
+
+.kubiforge-brand {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  width:fit-content;
+  margin-bottom:12px;
+  color:var(--ink);
+  text-decoration:none;
+}
+.kubiforge-brand img {
+  width:42px;
+  height:42px;
+  padding:4px;
+  border:1px solid var(--line);
+  background:rgba(142,125,255,.08);
+  object-fit:contain;
+}
+.kubiforge-brand h3 {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin:0;
+  transition:color .2s;
+}
+.kubiforge-brand:hover h3,
+.kubiforge-brand:focus-visible h3 { color:var(--cyan); }
+.kubiforge-link {
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  margin-top:14px;
+  color:var(--cyan);
+  font:9px 'DM Mono',monospace;
+  letter-spacing:.1em;
+  text-decoration:none;
+}
+.kubiforge-link:hover,
+.kubiforge-link:focus-visible { color:var(--ink); }
+.footer-heart { color:#ff5b73; font-family:'Segoe UI Emoji',sans-serif; }
